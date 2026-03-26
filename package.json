@@ -1,0 +1,29 @@
+{
+  "name": "@5qln/core",
+  "version": "0.1.0",
+  "description": "The 5QLN constitutional grammar as a standalone TypeScript library — the decoder is the invariant, the shell is the variable.",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "test:watch": "node --experimental-vm-modules node_modules/.bin/jest --watch",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": ["5qln", "constitutional", "grammar", "decoder", "kernel"],
+  "author": "Amihai Loven",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.4.0"
+  }
+}
