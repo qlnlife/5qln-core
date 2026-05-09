@@ -64,6 +64,10 @@ export {
 // ─── Kernel ──────────────────────────────────────────────────
 export { Kernel } from './kernel.js';
 
+// ─── Fractal Kernel ──────────────────────────────────────────
+export { FractalKernel } from './fractal-kernel.js';
+export type { DepthResult, DepthStackEntry } from './fractal-kernel.js';
+
 // ─── Attestation ─────────────────────────────────────────────
 export { Attestation, canonicalJSON } from './attestation.js';
 
@@ -86,3 +90,7 @@ export {
   residueToMarkdown,
   residueToJSON,
 } from './export.js';
+
+// ─── Membrane Watcher ────────────────────────────────────────
+export { MembraneWatcher } from './membrane-watcher.js';
+export type { CorruptionDetection, WatcherResult } from './membrane-watcher.js';
