@@ -98,3 +98,13 @@ export type { CorruptionDetection, WatcherResult } from './membrane-watcher.js';
 // ─── Codex ───────────────────────────────────────────────────
 export { Codex } from './codex.js';
 export type { CodexEntry, CodexExample, CodexCanonical } from './codex.js';
+
+// ─── Adaptive Syntax Activation ──────────────────────────────
+export { SyntaxActivator, activateSyntax } from './syntax-activator.js';
+export type {
+  ActiveSyntax,
+  ActiveLens,
+  ActiveFormation,
+  ActiveField,
+  FormedOutput,
+} from './syntax-activator.js';
