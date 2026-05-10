@@ -109,6 +109,21 @@ export type {
   FormedOutput,
 } from './syntax-activator.js';
 
+// ─── MCP Server (stdio, dependency-free) ─────────────────────
+export {
+  createServerState,
+  processRequest,
+  startStdioServer,
+  MCP_SERVER_NAME,
+  MCP_SERVER_VERSION,
+  MCP_PROTOCOL_VERSION,
+} from './mcp-server.js';
+export type {
+  JsonRpcRequest,
+  JsonRpcResponse,
+  McpServerState,
+} from './mcp-server.js';
+
 // ─── Self-Improve ────────────────────────────────────────────
 export { SelfImprove, DEFAULT_SAMPLES } from './self-improve.js';
 export type {

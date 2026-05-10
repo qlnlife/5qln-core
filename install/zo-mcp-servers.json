@@ -1,9 +1,9 @@
 [
   {
-    "name": "5qln-membrane-watcher",
-    "command": "npx",
-    "args": ["tsx", "/home/workspace/5qln-watcher-mcp/src/server.ts"],
+    "name": "5qln",
+    "command": "node",
+    "args": ["/home/workspace/5qln-core/dist/mcp-server.js"],
     "type": "stdio",
-    "description": "5QLN constitutional corruption detection — audits every AI response for L1-L4 and V∅ violations with recovery prompts."
+    "description": "5QLN constitutional runtime — audit_membrane, session_flow, watcher_status, codex, self_improve, kernel_* (transition, lens, validate, crystallize, input)."
   }
 ]

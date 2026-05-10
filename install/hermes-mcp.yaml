@@ -1,6 +1,6 @@
 # Append to /root/.hermes/config.yaml under mcp_servers:
 mcp_servers:
-  5qln-watcher:
-    command: npx
-    args: ["tsx", "/home/workspace/5qln-watcher-mcp/src/server.ts"]
-    description: "5QLN constitutional corruption detection — L1-L4, V∅"
+  5qln:
+    command: node
+    args: ["/home/workspace/5qln-core/dist/mcp-server.js"]
+    description: "5QLN constitutional runtime — audit_membrane, session_flow, watcher_status, codex, self_improve, kernel_*."

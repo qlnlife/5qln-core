@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "5qln": {
+      "command": "node",
+      "args": ["/ABSOLUTE/PATH/TO/5qln-core/dist/mcp-server.js"],
+      "description": "5QLN constitutional runtime"
+    }
+  }
+}
