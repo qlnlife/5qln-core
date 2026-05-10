@@ -94,3 +94,7 @@ export {
 // ─── Membrane Watcher ────────────────────────────────────────
 export { MembraneWatcher } from './membrane-watcher.js';
 export type { CorruptionDetection, WatcherResult } from './membrane-watcher.js';
+
+// ─── Codex ───────────────────────────────────────────────────
+export { Codex } from './codex.js';
+export type { CodexEntry, CodexExample, CodexCanonical } from './codex.js';
