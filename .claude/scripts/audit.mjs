@@ -10,6 +10,7 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
+import { appendAuditLog } from './log.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(here, '..', '..');
@@ -29,13 +30,17 @@ const args = process.argv.slice(2);
 let phase = 'P';
 let json = false;
 let text = null;
+let noLog = false;
+let source = 'audit';
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
   if (a === '--phase') phase = args[++i];
   else if (a === '--json') json = true;
   else if (a === '--text') text = args[++i];
+  else if (a === '--no-log') noLog = true;
+  else if (a === '--source') source = args[++i];
   else if (a === '--help' || a === '-h') {
-    console.log('Usage: audit.mjs [--phase S|G|Q|P|V] [--text "..."] [--json]');
+    console.log('Usage: audit.mjs [--phase S|G|Q|P|V] [--text "..."] [--json] [--no-log] [--source <tag>]');
     process.exit(0);
   }
 }
@@ -54,6 +59,10 @@ if (!text.trim()) {
 }
 
 const result = new MembraneWatcher().audit(text, phase);
+
+if (!noLog) {
+  appendAuditLog({ source, phase, result, text });
+}
 
 if (json) {
   console.log(JSON.stringify(result, null, 2));
