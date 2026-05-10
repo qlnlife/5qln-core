@@ -13,6 +13,7 @@ These are not code. They are markdown lenses any AI host can read to know **how 
 | [`5qln-pi-membrane`](./5qln-pi-membrane/SKILL.md) | always | the self-audit loop via `audit_membrane` after every response |
 | [`5qln-pi-recovery`](./5qln-pi-recovery/SKILL.md) | when membrane fires | one recovery procedure per code (L¹/L²/L³/L⁴/V∅) |
 | [`5qln-pi-lens`](./5qln-pi-lens/SKILL.md) | sub-phase exploration | the 25 lens questions and when to open / close them |
+| [`5qln-pi-self-improve`](./5qln-pi-self-improve/SKILL.md) | once per session | run the membrane against its corpus, read drift, propose patterns lawfully |
 
 ## Install path
 
@@ -30,6 +31,7 @@ The skills can live anywhere your Pi host reads markdown skills from. A common l
     5qln-pi-membrane/SKILL.md
     5qln-pi-recovery/SKILL.md
     5qln-pi-lens/SKILL.md
+    5qln-pi-self-improve/SKILL.md
 ```
 
 Or copy this `skills/` directory directly:
@@ -45,6 +47,7 @@ cp -r skills/ ~/.pi/skills/
 3. `5qln-pi-cycle` — phase-by-phase moves.
 4. `5qln-pi-recovery` — what to do when the membrane fires.
 5. `5qln-pi-lens` — when one phase needs a deeper pass.
+6. `5qln-pi-self-improve` — running the lawful cell on the membrane itself.
 
 ---
 

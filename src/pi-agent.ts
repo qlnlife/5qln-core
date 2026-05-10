@@ -38,6 +38,7 @@ import { Codex } from './codex.js';
 import { SyntaxActivator } from './syntax-activator.js';
 import { MembraneWatcher } from './membrane-watcher.js';
 import { Attestation } from './attestation.js';
+import { SelfImprove, type SelfImproveSnapshot } from './self-improve.js';
 
 // ─── Structural subset of the Pi ExtensionAPI ────────────────
 //
@@ -108,6 +109,7 @@ export interface FiveQLNExtensionOptions {
   readonly codex?: Codex;
   readonly activator?: SyntaxActivator;
   readonly attestation?: Attestation;
+  readonly selfImprove?: SelfImprove;
   /** Membrane minimum confidence. Default 'medium'. */
   readonly minConfidence?: ConfidenceLevel;
   /** Audit AI message_end events automatically. Default true. */
@@ -129,6 +131,7 @@ export interface FiveQLNExtension {
   readonly codex: Codex;
   readonly activator: SyntaxActivator;
   readonly attestation: Attestation;
+  readonly selfImprove: SelfImprove;
   init(): Promise<void>;
   statusLine(): string;
   auditText(text: string): {
@@ -138,6 +141,8 @@ export interface FiveQLNExtension {
     recoveries: string[];
     summary: string;
   };
+  /** Latest self-improve snapshot, or null if none has been run yet. */
+  lastSnapshot(): SelfImproveSnapshot | null;
 }
 
 // ─── Factory ─────────────────────────────────────────────────
@@ -148,6 +153,9 @@ export function createPiExtension(opts: FiveQLNExtensionOptions = {}): FiveQLNEx
   const codex = opts.codex ?? new Codex();
   const activator = opts.activator ?? new SyntaxActivator(codex);
   const attestation = opts.attestation ?? new Attestation();
+  const selfImprove =
+    opts.selfImprove ?? new SelfImprove({ watcher, codex, attestation });
+  let lastSnapshot: SelfImproveSnapshot | null = null;
   const minConfidence: ConfidenceLevel = opts.minConfidence ?? 'medium';
   const autoAudit = opts.autoAudit !== false;
   const statusKey = opts.statusKey ?? '5qln';
@@ -300,6 +308,42 @@ export function createPiExtension(opts: FiveQLNExtensionOptions = {}): FiveQLNEx
     });
 
     pi.registerTool({
+      name: 'self_improve',
+      label: 'Self-Improve',
+      description:
+        'Run one self-improve cycle: replay the canonical sample corpus through the membrane, return health, degraded (false-negative), spurious (false-positive), and a hash chained to the prior snapshot.',
+      promptSnippet:
+        'Call self_improve when the user asks to verify the membrane, or once per long session. Read the markdown to spot drift before continuing.',
+      parameters: { type: 'object', properties: {} },
+      async execute() {
+        const snap = await selfImprove.run(lastSnapshot ?? undefined);
+        const md = selfImprove.toMarkdown(snap, lastSnapshot ?? undefined);
+        pi.appendEntry?.('5qln:self-improve', {
+          cycle: snap.cycle,
+          hash: snap.hash,
+          parent: snap.parentHash,
+          health: snap.health,
+          degraded: snap.degraded.map(r => r.id),
+          spurious: snap.spurious.map(r => r.id),
+        });
+        lastSnapshot = snap;
+        return {
+          content: [{ type: 'text', text: md }],
+          details: {
+            cycle: snap.cycle,
+            hash: snap.hash,
+            parent_hash: snap.parentHash,
+            health: snap.health,
+            passed: snap.passed,
+            failed: snap.failed,
+            degraded: snap.degraded.map(r => r.id),
+            spurious: snap.spurious.map(r => r.id),
+          },
+        };
+      },
+    });
+
+    pi.registerTool({
       name: 'watcher_status',
       label: 'Watcher Status',
       description:
@@ -426,6 +470,26 @@ export function createPiExtension(opts: FiveQLNExtensionOptions = {}): FiveQLNEx
       },
     });
 
+    pi.registerCommand('5qln-self-improve', {
+      description:
+        'Run one self-improve cycle and print the snapshot — health, drift, hash chain.',
+      async handler(_args, ctx) {
+        const snap = await selfImprove.run(lastSnapshot ?? undefined);
+        const md = selfImprove.toMarkdown(snap, lastSnapshot ?? undefined);
+        pi.appendEntry?.('5qln:self-improve', {
+          cycle: snap.cycle,
+          hash: snap.hash,
+          parent: snap.parentHash,
+          health: snap.health,
+          degraded: snap.degraded.map(r => r.id),
+          spurious: snap.spurious.map(r => r.id),
+        });
+        lastSnapshot = snap;
+        const tone = snap.failed === 0 ? 'info' : 'warning';
+        ctx.ui.notify(md, tone);
+      },
+    });
+
     pi.registerCommand('5qln-integrity', {
       description: 'Show integrity: corruption, coherence, fingerprints.',
       async handler(_args, ctx) {
@@ -447,9 +511,11 @@ export function createPiExtension(opts: FiveQLNExtensionOptions = {}): FiveQLNEx
     codex,
     activator,
     attestation,
+    selfImprove,
     init,
     statusLine,
     auditText,
+    lastSnapshot: () => lastSnapshot,
   }) as FiveQLNExtension;
 }
 

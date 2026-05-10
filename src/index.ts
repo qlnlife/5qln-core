@@ -109,6 +109,17 @@ export type {
   FormedOutput,
 } from './syntax-activator.js';
 
+// ─── Self-Improve ────────────────────────────────────────────
+export { SelfImprove, DEFAULT_SAMPLES } from './self-improve.js';
+export type {
+  SelfImproveSample,
+  SelfImproveSnapshot,
+  SelfImproveDiff,
+  SelfImproveOptions,
+  SampleResult,
+  SampleResultKind,
+} from './self-improve.js';
+
 // ─── Pi Agent (compiled runtime) ─────────────────────────────
 export { createPiExtension } from './pi-agent.js';
 export type {

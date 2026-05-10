@@ -80,6 +80,7 @@ describe('createPiExtension — registration', () => {
     expect(fake.tools.has('audit_membrane')).toBe(true);
     expect(fake.tools.has('session_flow')).toBe(true);
     expect(fake.tools.has('watcher_status')).toBe(true);
+    expect(fake.tools.has('self_improve')).toBe(true);
   });
 
   test('registers the slash commands', () => {
@@ -93,6 +94,7 @@ describe('createPiExtension — registration', () => {
       '5qln-lens',
       '5qln-validate',
       '5qln-crystallize',
+      '5qln-self-improve',
       '5qln-integrity',
     ]) {
       expect(fake.commands.has(name)).toBe(true);
@@ -335,6 +337,50 @@ describe('createPiExtension — slash commands', () => {
     expect(parsed).toHaveProperty('coherence');
     expect(parsed.codex_fingerprint).toBeTruthy();
     expect(parsed.decoder_fingerprint).toBeTruthy();
+  });
+});
+
+
+describe('createPiExtension — self-improve', () => {
+
+  test('self_improve tool runs a cycle and persists a 5qln:self-improve entry', async () => {
+    const ext = createPiExtension();
+    const fake = makeFakePi();
+    ext(fake.api);
+    const tool = fake.tools.get('self_improve')!;
+    const result = await tool.execute('id', {});
+    expect(result.content[0].text).toMatch(/Self-Improve — cycle 1/);
+    const details = result.details as { cycle: number; hash: string; health: number };
+    expect(details.cycle).toBe(1);
+    expect(details.hash.length).toBe(64);
+    expect(details.health).toBeGreaterThanOrEqual(0);
+    const persisted = fake.entries.filter(e => e.customType === '5qln:self-improve');
+    expect(persisted.length).toBe(1);
+  });
+
+  test('subsequent self_improve runs chain via parent_hash', async () => {
+    const ext = createPiExtension();
+    const fake = makeFakePi();
+    ext(fake.api);
+    const tool = fake.tools.get('self_improve')!;
+    const r1 = await tool.execute('id', {});
+    const r2 = await tool.execute('id', {});
+    const d1 = r1.details as { cycle: number; hash: string };
+    const d2 = r2.details as { cycle: number; hash: string; parent_hash: string };
+    expect(d2.cycle).toBe(d1.cycle + 1);
+    expect(d2.parent_hash).toBe(d1.hash);
+  });
+
+  test('/5qln-self-improve runs and notifies, info on green corpus', async () => {
+    const ext = createPiExtension();
+    const fake = makeFakePi();
+    ext(fake.api);
+    const cmd = fake.commands.get('5qln-self-improve')!;
+    await cmd.handler('', fake.ctx);
+    const last = fake.notifications.at(-1)!;
+    expect(last.message).toMatch(/Self-Improve/);
+    expect(last.type).toBe('info');
+    expect(ext.lastSnapshot()).not.toBeNull();
   });
 });
 
