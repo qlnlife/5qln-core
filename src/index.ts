@@ -108,3 +108,18 @@ export type {
   ActiveField,
   FormedOutput,
 } from './syntax-activator.js';
+
+// ─── Pi Agent (compiled runtime) ─────────────────────────────
+export { createPiExtension } from './pi-agent.js';
+export type {
+  FiveQLNExtension,
+  FiveQLNExtensionOptions,
+  ConfidenceLevel,
+  PiExtensionAPI,
+  PiExtensionContext,
+  PiUIContext,
+  PiToolDefinition,
+  PiToolResult,
+  PiCommandOptions,
+  PiContentBlock,
+} from './pi-agent.js';
