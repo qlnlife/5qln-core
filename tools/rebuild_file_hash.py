@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Pre-commit: recompute CANONICAL_FILE_HASH in init.py so integrity always matches."""
+"""Pre-commit: recompute CANONICAL_FI in init.py so integrity always matches."""
 import hashlib, re, sys
 
 for path in sys.argv[1:]:
     src = open(path).read()
-    if 'CANONICAL_FILE_HASH' not in src:
+    if 'CANONICAL_NORMALIZED_HASH' not in src:
         continue
-    m = re.search(r'CANONICAL_FILE_HASH\s*=\s*"([0-9a-f]{64})"', src)
+    m = re.search(r'CANONICAL_NORMALIZED_HASH\s*=\s*"([0-9a-f]{64})"', src)
     if not m:
-        print(f'WARN: {path}: CANONICAL_FILE_HASH not parsable, skipping')
+        print(f'WARN: {path}: CANONICAL_NORMALIZED_HASH not parsable, skipping')
         continue
     old_hash = m.group(1)
     normalized = src.replace(old_hash, '0' * 64)

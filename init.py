@@ -43,7 +43,7 @@ CODEX_LINES = [
 ]
 
 CANONICAL_CODEX_HASH = "cee119fc63277b3b01a4ec6f873ceb60ec9a90f605500b03035b3aeb0dcc4b9a"
-CANONICAL_FILE_HASH = "85063788e4435665dd8a157c30761021271a0ad7aee7ea73897fe1ec5575f6f2"
+CANONICAL_NORMALIZED_HASH = "85624b50b6f73da4393864d9ada1579ecd0e4c0ba4f58fad9cd3296f6e904d01"
 
 # ═══════════════════════════════════════════════════════════════════
 # BOOTSTRAP — Self-install on first pipe
@@ -98,23 +98,23 @@ def bootstrap():
 # ═══════════════════════════════════════════════════════════════════
 
 def verify_file_integrity():
-    """Hash the full source file with CANONICAL_FILE_HASH zeroed out,
-    then compare against the stored CANONICAL_FILE_HASH. The zeroing
+    """Hash the full source file with CANONICAL_NORMALIZED_HASH zeroed out,
+    then compare against the stored CANONICAL_NORMALIZED_HASH. The zeroing
     breaks the circularity: the hash doesn't include itself."""
     if not (__file__ and Path(__file__).exists()):
         return True
     raw = Path(__file__).read_text()
-    # Zero out the 64-char hex value of CANONICAL_FILE_HASH
-    current_hash = re.search(r'CANONICAL_FILE_HASH = "([a-f0-9]{64})"', raw)
+    # Zero out the 64-char hex value of CANONICAL_NORMALIZED_HASH
+    current_hash = re.search(r'CANONICAL_NORMALIZED_HASH = "([a-f0-9]{64})"', raw)
     if current_hash:
         normalized = raw.replace(current_hash.group(1), "0" * 64)
     else:
         normalized = raw
     computed_hash = hashlib.sha256(normalized.encode()).hexdigest()
-    if computed_hash != CANONICAL_FILE_HASH:
+    if computed_hash != CANONICAL_NORMALIZED_HASH:
         print("╔══════════════════════════════════════════════════════╗")
-        print("║  ❌ FILE INTEGRITY FAILED                           ║")
-        print(f"║  Expected: {CANONICAL_FILE_HASH}                    ║")
+        print("║  ❌ NORMALIZED INTEGRITY FAILED                           ║")
+        print(f"║  Expected: {CANONICAL_NORMALIZED_HASH}                    ║")
         print(f"║  Got:      {computed_hash}                    ║")
         print("║  This file has been modified. Refusing to run.      ║")
         print("╚══════════════════════════════════════════════════════╝")
