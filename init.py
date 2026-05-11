@@ -43,7 +43,7 @@ CODEX_LINES = [
 ]
 
 CANONICAL_CODEX_HASH = "8354d48dd976d2352bab61bbe096db4c8041ba3e2ae260886a87728941d04437"
-CANONICAL_FILE_HASH = "89f3c6238b63bd204008085a0c34025c2476c8b18c881ec1babee176256dab3c"
+CANONICAL_FILE_HASH = "27ac574c963d63f88105d4f438e35d1287064de0bc6dd850337d702f8c7ff25d"
 
 # ═══════════════════════════════════════════════════════════════════
 # BOOTSTRAP — Self-install on first pipe
