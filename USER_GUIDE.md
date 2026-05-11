@@ -1,3 +1,5 @@
+> **This guide describes v0.5.x of @5qln/core (May 2026).** The TS surface is stabilized but not yet published to npm. The Python kernel is the currently-shipping distributable. For the live state, see README.md: Unicode text, UTF-8 text and ROADMAP.md: Unicode text, UTF-8 text.
+
 # @5qln/core — User Guide
 
 ## What This Library Is

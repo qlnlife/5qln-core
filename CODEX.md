@@ -24,7 +24,7 @@ Lines 1-7: the equations. Line 8: the holographic law — every phase contains a
 ## Canonical Hash
 
 ```
-8354d48dd976d2352bab61bbe096db4c8041ba3e2ae260886a87728941d04437
+cee119fc63277b3b01a4ec6f873ceb60ec9a90f605500b03035b3aeb0dcc4b9a
 ```
 
 ## That Is All
