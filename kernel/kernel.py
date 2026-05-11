@@ -19,19 +19,20 @@ from pathlib import Path
 from datetime import datetime, timezone
 
 # ─── Codex Invariant ──────────────────────────────────────────────
-# The Nine Invariant Lines as they must appear in every implementation.
+# The Ten Invariant Lines as they must appear in every implementation.
 # Verified against CODEX.md at init. Any change = not constitutional.
 
 CODEX_LINES = [
-    "1.  H = ∞0 | A = K",
-    "2.  S → G → Q → P → V",
-    "3.  S = ∞0 → ?",
-    "4.  G = α ≡ {α'}",
-    "5.  Q = φ ⋂ Ω",
-    "6.  P = δE/δV → ∇",
-    "7.  V = (L ∩ G → B'') → ∞0'",
-    "8.  No V without ∞0'",
-    "9.  L1  L2  L3  L4  V∅",
+    "1. H = ∞0 | A = K",
+    "2. S → G → Q → P → V",
+    "3. S = ∞0 → ?",
+    "4. G = α ≡ {α'}",
+    "5. Q = φ ∩ Ω",
+    "6. P = δE/δV → ∇",
+    "7. V = (L ∩ G → B'') → ∞0'",
+    "8. XY := X within Y, X,Y ∈ {S,G,Q,P,V}",
+    "9. No V without ∞0'",
+    "10. L1  L2  L3  L4  V∅",
 ]
 
 CODEX_HASH = hashlib.sha256("\n".join(CODEX_LINES).encode()).hexdigest()
@@ -43,7 +44,7 @@ OUTPUTS = {"S": "X", "G": "Y", "Q": "Z", "P": "A", "V": "B"}
 EQUATIONS = {
     "S": "∞0 → ?",
     "G": "α ≡ {α'}",
-    "Q": "φ ⋂ Ω",
+    "Q": "φ ∩ Ω",
     "P": "δE/δV → ∇",
     "V": "(L ∩ G → B'') → ∞0'",
 }
@@ -328,7 +329,7 @@ def cmd_verify(args, state):
         "codex_hash": CODEX_HASH,
         "stored_hash": stored_hash,
         "verified": match,
-        "nine_lines_present": len(CODEX_LINES) == 9,
+        "ten_lines_present": len(CODEX_LINES) == 10,
     }
     print(json.dumps(output))
 
