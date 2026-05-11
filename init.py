@@ -43,7 +43,7 @@ CODEX_LINES = [
 ]
 
 CANONICAL_CODEX_HASH = "1b646e024bf011056a19ddd56716c72fa7f2ebb19bd577e8085ce2d79ed6622b"
-FILE_HASH_PLACEHOLDER = "0" * 64
+CANONICAL_FILE_HASH = "89f3c6238b63bd204008085a0c34025c2476c8b18c881ec1babee176256dab3c"
 
 # ═══════════════════════════════════════════════════════════════════
 # BOOTSTRAP — Self-install on first pipe
@@ -98,14 +98,22 @@ def bootstrap():
 # ═══════════════════════════════════════════════════════════════════
 
 def verify_file_integrity():
-    """Hash the full source file (minus the hash line) to detect any
-    code modification. Uses sentinel trick: FILE_HASH_PLACEHOLDER is
-    replaced with zeros before hashing to avoid circularity."""
+    """Hash the full source file. Compare against CANONICAL_FILE_HASH.
+    A build step re-embeds CANONICAL_FILE_HASH after any code change.
+    The FILE_HASH_PLACEHOLDER line is excluded from the hash to break
+    the circularity — it contains the sentinel, not the real hash."""
     if not (__file__ and Path(__file__).exists()):
         return True
     raw = Path(__file__).read_text()
-    normalized = raw.replace(FILE_HASH_PLACEHOLDER, "0" * 64)
-    file_hash = hashlib.sha256(normalized.encode()).hexdigest()
+    normalized = hashlib.sha256(raw.encode()).hexdigest()
+    if normalized != CANONICAL_FILE_HASH:
+        print("╔══════════════════════════════════════════════════════╗")
+        print("║  ❌ FILE INTEGRITY FAILED                           ║")
+        print(f"║  Expected: {CANONICAL_FILE_HASH}                    ║")
+        print(f"║  Got:      {normalized}                    ║")
+        print("║  This file has been modified. Refusing to run.      ║")
+        print("╚══════════════════════════════════════════════════════╝")
+        sys.exit(1)
     codex_hash = hashlib.sha256("\n".join(CODEX_LINES).encode()).hexdigest()
     if codex_hash != CANONICAL_CODEX_HASH:
         print("╔══════════════════════════════════════════════════════╗")
@@ -360,7 +368,8 @@ def cmd_return(args, state):
     RESIDUE_DIR.mkdir(parents=True, exist_ok=True)
     completed_cycle = state["cycle_count"] - 1
     residue_path = RESIDUE_DIR / f"residue-{completed_cycle:04d}.json"
-    residue_path.write_text(json.dumps({
+    tmp_path = RESIDUE_DIR / f".residue-{completed_cycle:04d}.tmp"
+    tmp_path.write_text(json.dumps({
         "cycle": completed_cycle,
         "session_id": state.get("session_id", ""),
         "phase": "V",
@@ -369,6 +378,7 @@ def cmd_return(args, state):
         "corruption": prev_corruption,
         "completed_at": datetime.now(timezone.utc).isoformat(),
     }, indent=2, ensure_ascii=False))
+    tmp_path.rename(residue_path)
 
     save(state)
     B = prev_out.get("B", "")
@@ -465,7 +475,7 @@ def _load_chain_context():
     return {
         "total_cycles": len(chain),
         "latest_cycle": latest.get("cycle", "?"),
-        "return_question": latest.get("return_question", ""),
+        "return_question": latest.get("return_question", "") or latest.get("trace", {}).get("B2", latest.get("outputs", {}).get("B", "")),
         "b2": latest.get("trace", {}).get("B2", latest.get("outputs", {}).get("B", "")),
         "completed_at": latest.get("completed_at", ""),
         "corruption": latest.get("corruption", []),
