@@ -42,8 +42,8 @@ CODEX_LINES = [
     "10. L¹  L²  L³  L⁴  V∅",
 ]
 
-CANONICAL_CODEX_HASH = "8354d48dd976d2352bab61bbe096db4c8041ba3e2ae260886a87728941d04437"
-CANONICAL_FILE_HASH = "27ac574c963d63f88105d4f438e35d1287064de0bc6dd850337d702f8c7ff25d"
+CANONICAL_CODEX_HASH = "cee119fc63277b3b01a4ec6f873ceb60ec9a90f605500b03035b3aeb0dcc4b9a"
+CANONICAL_FILE_HASH = "85063788e4435665dd8a157c30761021271a0ad7aee7ea73897fe1ec5575f6f2"
 
 # ═══════════════════════════════════════════════════════════════════
 # BOOTSTRAP — Self-install on first pipe
@@ -98,19 +98,24 @@ def bootstrap():
 # ═══════════════════════════════════════════════════════════════════
 
 def verify_file_integrity():
-    """Hash the full source file. Compare against CANONICAL_FILE_HASH.
-    A build step re-embeds CANONICAL_FILE_HASH after any code change.
-    The FILE_HASH_PLACEHOLDER line is excluded from the hash to break
-    the circularity — it contains the sentinel, not the real hash."""
+    """Hash the full source file with CANONICAL_FILE_HASH zeroed out,
+    then compare against the stored CANONICAL_FILE_HASH. The zeroing
+    breaks the circularity: the hash doesn't include itself."""
     if not (__file__ and Path(__file__).exists()):
         return True
     raw = Path(__file__).read_text()
-    normalized = hashlib.sha256(raw.encode()).hexdigest()
-    if normalized != CANONICAL_FILE_HASH:
+    # Zero out the 64-char hex value of CANONICAL_FILE_HASH
+    current_hash = re.search(r'CANONICAL_FILE_HASH = "([a-f0-9]{64})"', raw)
+    if current_hash:
+        normalized = raw.replace(current_hash.group(1), "0" * 64)
+    else:
+        normalized = raw
+    computed_hash = hashlib.sha256(normalized.encode()).hexdigest()
+    if computed_hash != CANONICAL_FILE_HASH:
         print("╔══════════════════════════════════════════════════════╗")
         print("║  ❌ FILE INTEGRITY FAILED                           ║")
         print(f"║  Expected: {CANONICAL_FILE_HASH}                    ║")
-        print(f"║  Got:      {normalized}                    ║")
+        print(f"║  Got:      {computed_hash}                    ║")
         print("║  This file has been modified. Refusing to run.      ║")
         print("╚══════════════════════════════════════════════════════╝")
         sys.exit(1)
