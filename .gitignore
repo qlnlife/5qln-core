@@ -5,10 +5,15 @@ __pycache__/
 .env
 .venv/
 
+# Build output
+dist/
+
 # Kernel state (local only, not distributed)
 state.json
 journal.jsonl
 .lock
+residues/
+seasons.json
 
 # OS
 .DS_Store
