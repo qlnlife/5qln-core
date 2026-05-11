@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+.venv/
+
+# Kernel state (local only, not distributed)
+state.json
+journal.jsonl
+.lock
+
+# OS
+.DS_Store
+Thumbs.db
