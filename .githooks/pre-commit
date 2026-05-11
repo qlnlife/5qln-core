@@ -1,0 +1,5 @@
+#!/bin/sh
+# Auto-recompute CANONICAL_FILE_HASH before every commit
+python3 tools/rebuild_file_hash.py init.py kernel/kernel.py
+# If the script changed the file, stage the change
+git add init.py kernel/kernel.py 2>/dev/null || true
