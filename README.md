@@ -7,7 +7,7 @@
 ## Quick Start
 
 ```bash
-curl -sL https://5qln.com/init | python3
+curl -sL https://raw.githubusercontent.com/qlnlife/5qln-core/master/init.py | python3
 ```
 
 That boots the 5QLN kernel. The Codex self-verifies. Then you're in S-phase — the terminal opens with:

@@ -135,7 +135,7 @@ JOURNAL_FILE = STATE_DIR / "journal.jsonl"
 LOCK_FILE = STATE_DIR / "kernel.lock"
 
 VERSION = "4.0.0"
-DISTRIBUTABLE_URL = "https://5qln.com/init"
+DISTRIBUTABLE_URL = "https://raw.githubusercontent.com/qlnlife/5qln-core/master/init.py"
 
 
 # ═══════════════════════════════════════════════════════════════════
