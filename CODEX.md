@@ -16,7 +16,7 @@
  7. V = (L ∩ G → B'') → ∞0'
  8. XY := X within Y, X,Y ∈ {S,G,Q,P,V}
  9. No V without ∞0'
-10. L1  L2  L3  L4  V∅
+10. L¹  L²  L³  L⁴  V∅
 ```
 
 Lines 1-7: the equations. Line 8: the holographic law — every phase contains all five. Line 9: the completion rule. Line 10: the five corruption codes.
@@ -24,7 +24,7 @@ Lines 1-7: the equations. Line 8: the holographic law — every phase contains a
 ## Canonical Hash
 
 ```
-1b646e024bf011056a19ddd56716c72fa7f2ebb19bd577e8085ce2d79ed6622b
+8354d48dd976d2352bab61bbe096db4c8041ba3e2ae260886a87728941d04437
 ```
 
 ## That Is All

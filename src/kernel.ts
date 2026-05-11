@@ -85,6 +85,7 @@ export class Kernel {
   private _inputHistory: string[] = [];
   private _phasesVisited: Set<Phase> = new Set(['S']);
   private _lensesUsed: Set<SubPhase> = new Set();
+  private _echoMode: boolean = false;
 
   constructor() {
     this._sessionId = generateId();
@@ -440,6 +441,14 @@ export class Kernel {
   private _checkTransitionCorruption(targetPhase: Phase): void {
     // L¹: leaving S without X
     if (this._phase === 'S' && targetPhase !== 'S' && this._outputStates.X === 'NONE') {
+      this._recordCorruption('L¹');
+    }
+    // G→Q without Y
+    if (this._phase === 'G' && targetPhase === 'Q' && this._outputStates.Y === 'NONE') {
+      this._recordCorruption('L¹');
+    }
+    // Q→P without Z
+    if (this._phase === 'Q' && targetPhase === 'P' && this._outputStates.Z === 'NONE') {
       this._recordCorruption('L¹');
     }
   }

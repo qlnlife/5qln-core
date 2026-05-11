@@ -37,7 +37,7 @@ No package manager. No dependencies beyond Python 3.
 
 ```bash
 python3 ~/.5qln/kernel.py verify
-# {"ok": true, "verified": true, "codex_hash": "1b646e02...", "ten_lines_present": true}
+# {"ok": true, "verified": true, "codex_hash": "8354d48dd976...", "ten_lines_present": true}
 ```
 
 ---
@@ -66,12 +66,33 @@ python3 ~/.5qln/kernel.py verify
  7. V = (L ∩ G → B'') → ∞0'
  8. XY := X within Y, X,Y ∈ {S,G,Q,P,V}
  9. No V without ∞0'
-10. L1  L2  L3  L4  V∅
+10. L¹  L²  L³  L⁴  V∅
 ```
 
-SHA-256: `1b646e024bf011056a19ddd56716c72fa7f2ebb19bd577e8085ce2d79ed6622b`
+SHA-256: `8354d48dd976d2352bab61bbe096db4c8041ba3e2ae260886a87728941d04437`
 
 ---
+
+
+## TypeScript Library
+
+```bash
+npm install @5qln/core
+```
+
+| Module | Purpose |
+|--------|---------|
+| `Kernel` | Deterministic state machine — S→G→Q→P→V |
+| `FractalKernel` | Depth-stacked kernel for lens-nested inquiry [experimental] |
+| `MembraneWatcher` | Pattern detection across output boundaries [experimental] |
+| `Codex` | Codex entry lookup and canonical validation [experimental] |
+| `Attestation` | Fingerprint computation, provenance records, 3-level verification |
+| `AIAdapter` | Phase-aware system prompt builder with AI boundary constraints |
+| `MemoryStorage` | In-memory residue storage (plug your own via StorageInterface) |
+| `buildAgentCard` | Generate constitutional Agent Cards for MCP/A2A |
+| `canonicalJSON` | Deterministic JSON serialization for hash stability |
+
+165 tests across 4 test suites. Zero platform bindings.
 
 ## License
 

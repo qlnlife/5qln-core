@@ -153,8 +153,8 @@ describe('Part I — Constitutional Invariants', () => {
     expect(AI_BOUNDARY[4]).toContain('not complete V without ∞0\'');
   });
 
-  test('minimum valid beginning carries the 9 DNA lines', () => {
-    expect(MINIMUM_VALID_BEGINNING.length).toBe(9);
+  test('minimum valid beginning carries the 10 DNA lines', () => {
+    expect(MINIMUM_VALID_BEGINNING.length).toBe(10);
     expect(MINIMUM_VALID_BEGINNING[0]).toBe('H = ∞0 | A = K');
     expect(MINIMUM_VALID_BEGINNING[1]).toBe('S → G → Q → P → V');
     expect(MINIMUM_VALID_BEGINNING[2]).toBe('S = ∞0 → ?');

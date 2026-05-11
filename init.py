@@ -39,10 +39,10 @@ CODEX_LINES = [
     "7. V = (L ∩ G → B'') → ∞0'",
     "8. XY := X within Y, X,Y ∈ {S,G,Q,P,V}",
     "9. No V without ∞0'",
-    "10. L1  L2  L3  L4  V∅",
+    "10. L¹  L²  L³  L⁴  V∅",
 ]
 
-CANONICAL_CODEX_HASH = "1b646e024bf011056a19ddd56716c72fa7f2ebb19bd577e8085ce2d79ed6622b"
+CANONICAL_CODEX_HASH = "8354d48dd976d2352bab61bbe096db4c8041ba3e2ae260886a87728941d04437"
 CANONICAL_FILE_HASH = "89f3c6238b63bd204008085a0c34025c2476c8b18c881ec1babee176256dab3c"
 
 # ═══════════════════════════════════════════════════════════════════

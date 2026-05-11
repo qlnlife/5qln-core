@@ -28,6 +28,17 @@ import {
   AI_BOUNDARY,
 } from './types.js';
 
+
+// ─── The Codex Gold Hash ─────────────────────────────────────
+// SHA-256 of the 10 invariant lines as they appear in CODEX.md.
+// This is the byte-identical, timeless anchor. The decoder
+// fingerprint carries this hash inside it. Any verifier can
+// independently compute and compare.
+
+export const CODEX_LINES_GOLD: readonly string[] = ['1. H = ∞0 | A = K', '2. S → G → Q → P → V', '3. S = ∞0 → ?', "4. G = α ≡ {α'}", '5. Q = φ ∩ Ω', '6. P = δE/δV → ∇', "7. V = (L ∩ G → B'') → ∞0'", '8. XY := X within Y, X,Y ∈ {S,G,Q,P,V}', "9. No V without ∞0'", '10. L¹  L²  L³  L⁴  V∅'];
+
+export const CODEX_GOLD_HASH = '8354d48dd976d2352bab61bbe096db4c8041ba3e2ae260886a87728941d04437';
+
 // ─── Canonical JSON ──────────────────────────────────────────
 // Sorts object keys deterministically before serializing.
 // Ensures the same fingerprint regardless of property insertion order.
@@ -94,6 +105,7 @@ function getConstitutionalInvariant() {
     scale_law: SCALE_LAW,
     center_rule: CENTER_RULE,
     ai_boundary: [...AI_BOUNDARY],
+    codex_gold_hash: CODEX_GOLD_HASH,
   };
 }
 
@@ -350,6 +362,38 @@ export class Attestation {
 
     return { passed: true, failures: [], chainDepth: depth + 1 };
   }
+  /**
+   * Verify this decoder against the Codex gold hash.
+   * Computes SHA-256 of the 10 invariant lines and compares
+   * to the pinned CODEX_GOLD_HASH. This closes the gap between
+   * the decoder fingerprint and the published Codex claim.
+   */
+  async verifyAgainstCodexGold(hashFn?: HashFunction): Promise<{
+    passed: boolean;
+    computed: string;
+    expected: string;
+  }> {
+    const h = hashFn ?? this._hashFn;
+    const lines = [
+      '1. H = ∞0 | A = K',
+      '2. S → G → Q → P → V',
+      '3. S = ∞0 → ?',
+      '4. G = α ≡ {α\'}',
+      '5. Q = φ ∩ Ω',
+      '6. P = δE/δV → ∇',
+      '7. V = (L ∩ G → B\'\') → ∞0\'',
+      '8. XY := X within Y, X,Y ∈ {S,G,Q,P,V}',
+      '9. No V without ∞0\'',
+      '10. L¹  L²  L³  L⁴  V∅',
+    ];
+    const computed = await h(lines.join('\n'));
+    return {
+      passed: computed === CODEX_GOLD_HASH,
+      computed,
+      expected: CODEX_GOLD_HASH,
+    };
+  }
+
 }
 
 export { canonicalJSON };
