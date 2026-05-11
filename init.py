@@ -43,61 +43,83 @@ CODEX_LINES = [
 ]
 
 CANONICAL_CODEX_HASH = "1b646e024bf011056a19ddd56716c72fa7f2ebb19bd577e8085ce2d79ed6622b"
+FILE_HASH_PLACEHOLDER = "0" * 64
 
 # ═══════════════════════════════════════════════════════════════════
 # BOOTSTRAP — Self-install on first pipe
 # ═══════════════════════════════════════════════════════════════════
 
 def bootstrap():
-    """If we're being piped via stdin, save ourselves to ~/.5qln/kernel.py
-    and re-exec from there so stdin is free for interactive use."""
+    """Self-install on first run. If not at ~/.5qln/kernel.py, save
+    ourselves there. If running from a file (not piped stdin), copy.
+    If piped via stdin, guide the user."""
     kernel_path = Path.home() / ".5qln" / "kernel.py"
 
-    # Already installed — just verify and continue
     if kernel_path.exists():
+        # Update if source is newer (self-update)
+        if __file__ and Path(__file__).resolve() != kernel_path.resolve():
+            if Path(__file__).stat().st_mtime > kernel_path.stat().st_mtime:
+                shutil.copy(__file__, kernel_path)
+                kernel_path.chmod(0o755)
+                print("  [Updated: ~/.5qln/kernel.py]")
         return False
 
-    # We're being piped — save ourselves
     kernel_path.parent.mkdir(parents=True, exist_ok=True)
 
-    # Read our own source from this file (if running from disk) or stdin
     if __file__ and Path(__file__).exists():
-        shutil.copy(__file__, kernel_path)
+        src = Path(__file__)
+        if src.resolve() != kernel_path.resolve():
+            shutil.copy(src, kernel_path)
+            kernel_path.chmod(0o755)
+            print(f"╔══════════════════════════════════════════════════════╗")
+            print(f"║  5QLN Kernel installed to ~/.5qln/kernel.py          ║")
+            print(f"║  Relaunching from installed path...                   ║")
+            print(f"╚══════════════════════════════════════════════════════╝")
+            # Re-exec from the installed path
+            os.execv(sys.executable, [sys.executable, str(kernel_path)] + sys.argv[1:])
+            return True
     else:
-        # Piped via stdin — source isn't a file. We must save from a known copy.
-        # The bootstrap writes the kernel from its embedded source.
-        # But for the curl | python3 case, we can't read ourselves.
-        # SOLUTION: copy from /proc/self/fd/0 during the initial pipe
-        # Actually: this only works if we came from a file.
-        # For curl-pipe, the user MUST re-run after the first save.
-        pass
+        # Piped via stdin — can't read ourselves
+        print(f"╔══════════════════════════════════════════════════════╗")
+        print(f"║  5QLN Kernel — piped via stdin                      ║")
+        print(f"║                                                      ║")
+        print(f"║  Save first, then run:                               ║")
+        print(f"║    curl -sL {DISTRIBUTABLE_URL} \\")
+        print(f"║      -o ~/.5qln/kernel.py                            ║")
+        print(f"║    python3 ~/.5qln/kernel.py                         ║")
+        print(f"╚══════════════════════════════════════════════════════╝")
+        sys.exit(0)
 
-    # Create the 5qln alias
-    kernel_path.chmod(0o755)
-    print(f"╔══════════════════════════════════════════════════════╗")
-    print(f"║  5QLN Kernel installed                              ║")
-    print(f"║  Location: ~/.5qln/kernel.py                        ║")
-    print(f"║  Run:      python3 ~/.5qln/kernel.py                ║")
-    print(f"║  Alias:    5qln (if available)                      ║")
-    print(f"║  Codex:    {CANONICAL_CODEX_HASH[:12]}...           ║")
-    print(f"╚══════════════════════════════════════════════════════╝")
-    return True
+    return False
 
 
 # ═══════════════════════════════════════════════════════════════════
 # CODEX VERIFICATION
 # ═══════════════════════════════════════════════════════════════════
 
-def verify_codex():
-    current = hashlib.sha256("\n".join(CODEX_LINES).encode()).hexdigest()
-    if current != CANONICAL_CODEX_HASH:
+def verify_file_integrity():
+    """Hash the full source file (minus the hash line) to detect any
+    code modification. Uses sentinel trick: FILE_HASH_PLACEHOLDER is
+    replaced with zeros before hashing to avoid circularity."""
+    if not (__file__ and Path(__file__).exists()):
+        return True
+    raw = Path(__file__).read_text()
+    normalized = raw.replace(FILE_HASH_PLACEHOLDER, "0" * 64)
+    file_hash = hashlib.sha256(normalized.encode()).hexdigest()
+    codex_hash = hashlib.sha256("\n".join(CODEX_LINES).encode()).hexdigest()
+    if codex_hash != CANONICAL_CODEX_HASH:
         print("╔══════════════════════════════════════════════════════╗")
         print("║  ❌ CODEX CORRUPTED                                 ║")
         print(f"║  Expected: {CANONICAL_CODEX_HASH}                    ║")
-        print(f"║  Got:      {current}                    ║")
+        print(f"║  Got:      {codex_hash}                    ║")
         print("║  This kernel is not constitutional. Refusing to run. ║")
         print("╚══════════════════════════════════════════════════════╝")
         sys.exit(1)
+    return True
+
+
+def verify_codex():
+    verify_file_integrity()
     return True
 
 
@@ -334,6 +356,20 @@ def cmd_return(args, state):
     state["phase"] = "S"
     state["sub_phase"] = None
     state["inputs_this_cycle"] = 0
+    # Write residue for session chain continuity
+    RESIDUE_DIR.mkdir(parents=True, exist_ok=True)
+    completed_cycle = state["cycle_count"] - 1
+    residue_path = RESIDUE_DIR / f"residue-{completed_cycle:04d}.json"
+    residue_path.write_text(json.dumps({
+        "cycle": completed_cycle,
+        "session_id": state.get("session_id", ""),
+        "phase": "V",
+        "outputs": prev_out,
+        "trace": prev_trace,
+        "corruption": prev_corruption,
+        "completed_at": datetime.now(timezone.utc).isoformat(),
+    }, indent=2, ensure_ascii=False))
+
     save(state)
     B = prev_out.get("B", "")
     print(f"  Cycle {state['cycle_count']-1} complete. ∞0′ opens cycle {state['cycle_count']}.")
@@ -613,6 +649,7 @@ COMMANDS = {
 
 
 def main():
+    bootstrap()
     verify_codex()
 
     cmd = sys.argv[1] if len(sys.argv) > 1 else "interactive"
