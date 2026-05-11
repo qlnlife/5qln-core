@@ -133,6 +133,7 @@ STATE_DIR = Path.home() / ".5qln"
 STATE_FILE = STATE_DIR / "state.json"
 JOURNAL_FILE = STATE_DIR / "journal.jsonl"
 LOCK_FILE = STATE_DIR / "kernel.lock"
+RESIDUE_DIR = STATE_DIR / "residues"
 
 VERSION = "4.0.0"
 DISTRIBUTABLE_URL = "https://raw.githubusercontent.com/qlnlife/5qln-core/master/init.py"
@@ -404,6 +405,66 @@ Journal: {JOURNAL_FILE}
 # FORMATTED OUTPUT
 # ═══════════════════════════════════════════════════════════════════
 
+def _load_chain_context():
+    """Load the session chain from residues. Returns context dict or None."""
+    if not RESIDUE_DIR.exists():
+        return None
+    
+    residues = sorted(RESIDUE_DIR.glob("residue-*.json"))
+    if not residues:
+        return None
+    
+    chain = []
+    for rpath in residues:
+        try:
+            r = json.loads(rpath.read_text())
+            chain.append(r)
+        except (json.JSONDecodeError, KeyError):
+            continue
+    
+    if not chain:
+        return None
+    
+    latest = chain[-1]
+    return {
+        "total_cycles": len(chain),
+        "latest_cycle": latest.get("cycle", "?"),
+        "return_question": latest.get("return_question", ""),
+        "b2": latest.get("trace", {}).get("B2", latest.get("outputs", {}).get("B", "")),
+        "completed_at": latest.get("completed_at", ""),
+        "corruption": latest.get("corruption", []),
+        "alpha": latest.get("trace", {}).get("alpha", ""),
+        "x": latest.get("trace", {}).get("X", latest.get("outputs", {}).get("X", "")),
+    }
+
+def _format_chain_banner(chain, state):
+    """Format the chain context as a banner for session start."""
+    if not chain:
+        return ""
+    
+    lines = []
+    lines.append("┌─ SESSION CHAIN ──────────────────────────────────────────┐")
+    lines.append(f"│  {chain['total_cycles']} cycles recorded · last: cycle {chain['latest_cycle']} at {chain['completed_at'][:10]}       │")
+    
+    if chain["x"]:
+        lines.append(f"│  X: {chain['x'][:45]:45s} │")
+    if chain["alpha"]:
+        lines.append(f"│  α: {chain['alpha'][:45]:45s} │")
+    if chain["b2"]:
+        lines.append(f"│  B'': {chain['b2'][:45]:45s} │")
+    
+    if chain["return_question"]:
+        lines.append(f"│                                                          │")
+        lines.append(f"│  ∞0' = \"{chain['return_question']}\"")
+        lines.append(f"│                                                          │")
+        lines.append(f"│  Continuing into S phase with this return.               │")
+    
+    if chain["corruption"]:
+        lines.append(f"│  ⚠ corruption this cycle: {', '.join(chain['corruption'])}")
+    
+    lines.append("└──────────────────────────────────────────────────────────┘")
+    return "\n".join(lines)
+
 def _format(state):
     p = state["phase"]
     outs = state["outputs"]
@@ -451,6 +512,10 @@ def _format(state):
 
 def interactive(state):
     """Run an interactive 5QLN session."""
+    # Present the session chain if residues exist
+    chain_info = _load_chain_context()
+    chain_banner = _format_chain_banner(chain_info, state)
+    
     print(f"""
 ╔══════════════════════════════════════════════════════════╗
 ║  5QLN Kernel v{VERSION}                                          ║
@@ -462,7 +527,7 @@ def interactive(state):
 ║  :status         show state                              ║
 ║  :quit           exit                                    ║
 ╚══════════════════════════════════════════════════════════╝
-""")
+{chain_banner}""")
 
     tty = None
     try:

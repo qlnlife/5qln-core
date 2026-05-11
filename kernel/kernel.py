@@ -67,6 +67,7 @@ STATE_DIR = Path.home() / ".5qln"
 STATE_FILE = STATE_DIR / "state.json"
 JOURNAL_FILE = STATE_DIR / "journal.jsonl"
 LOCK_FILE = STATE_DIR / "kernel.lock"
+RESIDUE_DIR = STATE_DIR / "residues"
 
 
 # ─── File Locking ─────────────────────────────────────────────────
@@ -124,9 +125,57 @@ def save(state):
 
 
 def journal(event_type, data):
-    entry = {"ts": datetime.now(timezone.utc).isoformat(), "event": event_type, **data}
-    with open(JOURNAL_FILE, "a") as f:
-        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    """Append an event to the journal."""
+    STATE_DIR.mkdir(parents=True, exist_ok=True)
+    with lock():
+        entry = {
+            "ts": datetime.now(timezone.utc).isoformat(),
+            "event": event_type,
+            "payload": data,
+        }
+        with open(JOURNAL_FILE, "a") as f:
+            f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+def _save_residue(cycle, outputs, trace, corruption, return_question):
+    """Write a cycle residue to ~/.5qln/residues/ for session-chain to consume.
+    
+    Residue format mirrors the @5qln/core/types.ts Residue type.
+    Each residue is self-contained: it carries the full cycle trace,
+    the return question (∞0'), and provenance for lineage tracking.
+    """
+    RESIDUE_DIR.mkdir(parents=True, exist_ok=True)
+    
+    # Generate a deterministic session ID from state if available,
+    # otherwise use the timestamp-based hash
+    session_id = hashlib.sha256(
+        f"{cycle}-{datetime.now(timezone.utc).isoformat()}".encode()
+    ).hexdigest()[:12]
+    
+    residue = {
+        "_meta": {
+            "format": "@5qln/residue",
+            "version": "0.1.0",
+            "codex_hash": CODEX_HASH[:12],
+        },
+        "id": f"residue-{cycle:04d}-{session_id}",
+        "session_id": session_id,
+        "cycle": cycle,
+        "completed_at": datetime.now(timezone.utc).isoformat(),
+        "outputs": outputs,
+        "trace": trace,
+        "corruption": corruption,
+        "return_question": return_question,
+        "lineage": {
+            "phase": "V",
+            "branch": "main",
+        },
+    }
+    
+    residue_file = RESIDUE_DIR / f"residue-{cycle:04d}.json"
+    with open(residue_file, "w") as f:
+        json.dump(residue, f, indent=2, ensure_ascii=False)
+    
+    return residue_file
 
 
 # ─── Corruption Detection ─────────────────────────────────────────
@@ -259,6 +308,13 @@ def cmd_return(args, state):
     prev_trace = dict(state["cycle_trace"])
     prev_corruption = list(state["corruption"])
 
+    # Extract the return question from B2 (the crystallized seed)
+    return_question = state["cycle_trace"].get("B2", "") or prev_outputs.get("B", "")
+    
+    # If args provided, use as explicit return question
+    if args:
+        return_question = " ".join(args)
+
     journal(
         "cycle_complete",
         {
@@ -266,7 +322,17 @@ def cmd_return(args, state):
             "outputs": prev_outputs,
             "trace": prev_trace,
             "corruption": prev_corruption,
+            "return_question": return_question,
         },
+    )
+
+    # Write residue for session-chain
+    _save_residue(
+        cycle=state["cycle_count"],
+        outputs=prev_outputs,
+        trace=prev_trace,
+        corruption=prev_corruption,
+        return_question=return_question,
     )
 
     state["cycle_count"] += 1
@@ -284,6 +350,7 @@ def cmd_return(args, state):
         "ok": True,
         "cycle_count": state["cycle_count"],
         "prev_B": prev_outputs.get("B"),
+        "return_question": return_question,
         "corruption_this_cycle": prev_corruption,
     }
     print(json.dumps(output))
@@ -365,6 +432,26 @@ def cmd_field(args, state):
         "cycle": state["cycle_count"],
     }
     print(json.dumps(output))
+
+
+def cmd_residues(args, state):
+    """List all residues in ~/.5qln/residues/."""
+    if not RESIDUE_DIR.exists():
+        print("No residues found.")
+        return
+    
+    residues = sorted(RESIDUE_DIR.glob("residue-*.json"))
+    if not residues:
+        print("No residues found.")
+        return
+    
+    print(json.dumps({
+        "count": len(residues),
+        "residues": [
+            json.loads(r.read_text())["id"]
+            for r in residues
+        ]
+    }, indent=2, ensure_ascii=False))
 
 
 # ─── Formatted Output ─────────────────────────────────────────────
@@ -455,6 +542,7 @@ COMMANDS = {
     "verify": cmd_verify,
     "subphase": cmd_subphase,
     "field": cmd_field,
+    "residues": cmd_residues,
 }
 
 
