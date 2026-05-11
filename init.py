@@ -20,6 +20,7 @@ import os
 import sys
 import fcntl
 import hashlib
+import re
 import shutil
 from pathlib import Path
 from datetime import datetime, timezone
@@ -43,7 +44,7 @@ CODEX_LINES = [
 ]
 
 CANONICAL_CODEX_HASH = "cee119fc63277b3b01a4ec6f873ceb60ec9a90f605500b03035b3aeb0dcc4b9a"
-CANONICAL_NORMALIZED_HASH = "85624b50b6f73da4393864d9ada1579ecd0e4c0ba4f58fad9cd3296f6e904d01"
+CANONICAL_NORMALIZED_HASH = "16075e69da7587f1beda0141d4881d04b9762c74a83e1e0fb96989f612409bab"
 
 # ═══════════════════════════════════════════════════════════════════
 # BOOTSTRAP — Self-install on first pipe
