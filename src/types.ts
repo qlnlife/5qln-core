@@ -272,7 +272,7 @@ export const MINIMUM_VALID_BEGINNING: readonly string[] = [
   'V = (L ∩ G → B\'\') → ∞0\'',
   'XY := X within Y',
   'No V without ∞0\'',
-  'L¹ | L² | L³ | L⁴ | V∅',
+  'L¹  L²  L³  L⁴  V∅',
 ] as const;
 
 // ─── Structural Types ────────────────────────────────────────

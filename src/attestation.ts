@@ -37,7 +37,7 @@ import {
 
 export const CODEX_LINES_GOLD: readonly string[] = ['1. H = ∞0 | A = K', '2. S → G → Q → P → V', '3. S = ∞0 → ?', "4. G = α ≡ {α'}", '5. Q = φ ∩ Ω', '6. P = δE/δV → ∇', "7. V = (L ∩ G → B'') → ∞0'", '8. XY := X within Y, X,Y ∈ {S,G,Q,P,V}', "9. No V without ∞0'", '10. L¹  L²  L³  L⁴  V∅'];
 
-export const CODEX_GOLD_HASH = '8354d48dd976d2352bab61bbe096db4c8041ba3e2ae260886a87728941d04437';
+export const CODEX_GOLD_HASH = 'cee119fc63277b3b01a4ec6f873ceb60ec9a90f605500b03035b3aeb0dcc4b9a';
 
 // ─── Canonical JSON ──────────────────────────────────────────
 // Sorts object keys deterministically before serializing.

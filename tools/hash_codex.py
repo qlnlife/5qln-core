@@ -22,7 +22,7 @@ CODEX_LINES = (
     "7. V = (L ∩ G → B'') → ∞0'\n"
     "8. XY := X within Y, X,Y ∈ {S,G,Q,P,V}\n"
     "9. No V without ∞0'\n"
-    "10. L1  L2  L3  L4  V∅"
+    "10. L¹  L²  L³  L⁴  V∅"
 )
 
 CANONICAL_HASH = hashlib.sha256(CODEX_LINES.encode()).hexdigest()

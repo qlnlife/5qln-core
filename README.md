@@ -48,7 +48,7 @@ python3 ~/.5qln/kernel.py verify
 
 2. **An auditable formation trail.** Every capture, phase transition, and cycle completion is written to `~/.5qln/journal.jsonl`. Readable by any AI in 10 years.
 
-3. **Corruption detection.** The kernel flags violations of the five codes (L1–L4, V∅) as they occur during sessions.
+3. **Corruption detection.** The kernel flags violations of the five codes (L¹–L⁴, V∅) as they occur during sessions.
 
 4. **A session kernel, not a chatbot.** Speak in 5QLN phases. Transition explicitly. Crystallize artifacts. Return to ∞0′.
 

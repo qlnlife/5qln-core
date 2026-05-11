@@ -428,6 +428,12 @@ describe('Part III — Attestation', () => {
     expect(f1).toBe(f2);
   });
 
+  test('verifyAgainstCodexGold returns the gold hash', async () => {
+    const result = await new Attestation().verifyAgainstCodexGold();
+    expect(result.passed).toBe(true);
+    expect(result.expected).toBe(result.computed);
+  });
+
   test('provenance record construction', async () => {
     const att = new Attestation();
     await att.computeFingerprint();

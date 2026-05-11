@@ -85,7 +85,6 @@ export class Kernel {
   private _inputHistory: string[] = [];
   private _phasesVisited: Set<Phase> = new Set(['S']);
   private _lensesUsed: Set<SubPhase> = new Set();
-  private _echoMode: boolean = false;
 
   constructor() {
     this._sessionId = generateId();
@@ -300,13 +299,6 @@ export class Kernel {
       this._recordCorruption('L¹');
     }
 
-    // Structural skip: G without Y at Q or beyond
-    const phaseIndex = PHASES.indexOf(this._phase);
-    if (phaseIndex >= 2 && this._outputStates.Y === 'NONE') {
-      // Not a named L-code in the constitution, but tracked as L¹ (closing)
-      // because skipping outputs is a form of closing toward answer
-    }
-
     // V∅: B'' exists but no return
     if (this._cycleTrace.Bpp && !this._cycleTrace.returnTo) {
       active.push('V∅');
@@ -439,6 +431,12 @@ export class Kernel {
   }
 
   private _checkTransitionCorruption(targetPhase: Phase): void {
+    // L¹: jump-skip — moving more than one phase forward
+    const ci = PHASES.indexOf(this._phase);
+    const ti = PHASES.indexOf(targetPhase);
+    if (ti > ci + 1) {
+      this._recordCorruption('L¹');
+    }
     // L¹: leaving S without X
     if (this._phase === 'S' && targetPhase !== 'S' && this._outputStates.X === 'NONE') {
       this._recordCorruption('L¹');
@@ -449,6 +447,10 @@ export class Kernel {
     }
     // Q→P without Z
     if (this._phase === 'Q' && targetPhase === 'P' && this._outputStates.Z === 'NONE') {
+      this._recordCorruption('L¹');
+    }
+    // P→V without A
+    if (this._phase === 'P' && targetPhase === 'V' && this._outputStates.A === 'NONE') {
       this._recordCorruption('L¹');
     }
   }
