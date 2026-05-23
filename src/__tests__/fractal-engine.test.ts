@@ -15,7 +15,7 @@ describe('Fractal Engine — language routing', () => {
 
     expect(route.phase).toBe('S');
     expect(route.confidence).toBe('high');
-    expect(route.why).toContain('emergence');
+    expect(route.why).toContain('not-knowing');
   });
 
   test('routes essence and self-similar echoes to G', () => {
@@ -158,11 +158,41 @@ describe('Fractal Engine — membrane enforcement', () => {
     expect(result.entry.corruptionFlags).not.toContain('V∅');
     expect(engine.hasReturnQuestion(result.entry.aiReflection)).toBe(true);
   });
+
+  test('includes kernel transition corruption in trail flags', () => {
+    const engine = new FractalEngine();
+    engine.processTurn({
+      humanInput: 'I cannot yet name what is alive underneath this.',
+    });
+
+    const result = engine.processTurn({
+      humanInput: 'The artifact is ready.',
+      phaseOverride: 'V',
+      aiReflection: 'B″ is ready. What return question opens now?',
+    });
+
+    expect(result.entry.corruptionFlags).toContain('L¹');
+  });
+
+  test('rejects sub-phase override outside current phase', () => {
+    const engine = new FractalEngine();
+
+    expect(() => engine.processTurn({
+      humanInput: 'This is a value artifact.',
+      phaseOverride: 'V',
+      subPhaseOverride: 'GG',
+    })).toThrow('Sub-phase GG does not belong to phase V.');
+  });
 });
 
 describe('Fractal Engine — completion', () => {
   test('completeCycle crystallizes B″ and returns to a new S state', () => {
     const engine = new FractalEngine();
+    engine.processTurn({
+      humanInput: 'The artifact is ready and the value can propagate.',
+      phaseOverride: 'V',
+    });
+
     const state = engine.completeCycle(
       'B″ = a formation brief carrying the session essence',
       'What question does this artifact make possible now?'
@@ -172,5 +202,14 @@ describe('Fractal Engine — completion', () => {
     expect(state.cycleCount).toBe(2);
     expect(state.outputStates.X).toBe('NONE');
     expect(state.activeCorruption).not.toContain('V∅');
+  });
+
+  test('completeCycle is only lawful from V', () => {
+    const engine = new FractalEngine();
+
+    expect(() => engine.completeCycle(
+      'B″ = premature artifact',
+      'What question opens now?'
+    )).toThrow('Cycle completion is lawful only from V.');
   });
 });

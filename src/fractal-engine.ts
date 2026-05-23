@@ -88,7 +88,7 @@ const PHASE_ORDER: readonly Phase[] = ['S', 'G', 'Q', 'P', 'V'] as const;
 
 const PHASE_SIGNALS: Record<Phase, readonly { pattern: RegExp; reason: string; weight: number }[]> = {
   S: [
-    { pattern: /\b(I don't know|I do not know|not sure|can't name|cannot name|unclear|mystery|unknown|not knowing)\b/i, reason: 'language of not-knowing', weight: 4 },
+    { pattern: /\b(I don't know|I do not know|not sure|can't (yet )?name|cannot (yet )?name|unclear|mystery|unknown|not knowing)\b/i, reason: 'language of not-knowing', weight: 4 },
     { pattern: /\b(question|inquiry|ask|asking|wonder|wondering)\b/i, reason: 'question is active', weight: 3 },
     { pattern: /\b(wants to emerge|trying to appear|underneath|alive underneath|what is alive|seed|spark)\b/i, reason: 'emergence language', weight: 4 },
     { pattern: /\?/, reason: 'explicit question mark', weight: 2 },
@@ -113,7 +113,7 @@ const PHASE_SIGNALS: Record<Phase, readonly { pattern: RegExp; reason: string; w
   V: [
     { pattern: /\b(artifact|deliverable|crystallize|crystallized|harvest|summary|output|result|benefit)\b/i, reason: 'artifact/value language', weight: 4 },
     { pattern: /\b(value|gift|fruit|seed|propagate|share|publish|complete|completion)\b/i, reason: 'local/global value language', weight: 3 },
-    { pattern: /\b(return question|new question|opens now|next inquiry|∞0')\b/i, reason: 'return-to-∞0 language', weight: 4 },
+    { pattern: /\b(return question|new question|opens now|next inquiry|∞0['′])\b/i, reason: 'return-to-∞0 language', weight: 4 },
   ],
 } as const;
 
@@ -151,7 +151,7 @@ const SUB_PHASE_LENS: Record<Phase, readonly { lens: Phase; patterns: readonly R
     { lens: 'G', patterns: [/\b(carry|faithful|essence|α)\b/i] },
     { lens: 'Q', patterns: [/\b(resonate|genuinely|lands)\b/i] },
     { lens: 'P', patterns: [/\b(propagate|flow|reach|gradient)\b/i] },
-    { lens: 'V', patterns: [/\b(return|new question|∞0'|fruit becoming seed)\b/i] },
+    { lens: 'V', patterns: [/\b(return|new question|∞0['′]|fruit becoming seed)\b/i] },
   ],
 } as const;
 
@@ -186,6 +186,7 @@ export class FractalEngine {
   private readonly _kernel: Kernel;
   private readonly _watcher: MembraneWatcher;
   private readonly _entries: FormationTrailEntry[] = [];
+  private readonly _structuralCorruption: CorruptionCode[] = [];
 
   constructor(kernel?: Kernel, watcher?: MembraneWatcher) {
     this._kernel = kernel ?? new Kernel();
@@ -254,8 +255,11 @@ export class FractalEngine {
     const subPhase = request.subPhaseOverride
       ? this._overrideSubPhase(request.subPhaseOverride)
       : this.routeSubPhase(route.phase, request.humanInput);
+    this._assertSubPhaseBelongsToPhase(route.phase, subPhase.subPhase);
 
+    const previousState = this._kernel.getState();
     this._kernel.transition(route.phase);
+    this._structuralCorruption.push(...this._detectTransitionCorruption(previousState, route.phase));
     const before = this._kernel.getState();
     const needsMainOutput = before.outputStates[PHASE_OUTPUT[route.phase]] === 'NONE';
     const inputResult = needsMainOutput
@@ -273,6 +277,13 @@ export class FractalEngine {
       this._watcher.audit(aiReflection, route.phase, request.humanInput),
     );
 
+    const kernelCorruption = this._kernel.checkCorruption();
+    const corruptionFlags = this._dedupeCorruption([
+      ...watcher.flags.map(flag => flag.code),
+      ...kernelCorruption,
+      ...this._structuralCorruption,
+    ]);
+
     const entry: FormationTrailEntry = {
       phase: route.phase,
       subPhase: subPhase.subPhase,
@@ -282,8 +293,8 @@ export class FractalEngine {
       aiReflection,
       phaseWhy: route.why,
       membraneSummary: watcher.summary,
-      corruptionFlags: watcher.flags.map(flag => flag.code),
-      recoveryPrompts: watcher.flags.map(flag => flag.recovery),
+      corruptionFlags,
+      recoveryPrompts: corruptionFlags.map(code => CORRUPTION_RECOVERY[code]),
       humanValidated: request.humanValidated ?? false,
       timestamp: now(),
     };
@@ -320,7 +331,10 @@ export class FractalEngine {
   }
 
   completeCycle(artifact: string, returnQuestion: string): KernelState {
-    this._kernel.transition('V');
+    if (this._kernel.getState().phase !== 'V') {
+      throw new Error('Cycle completion is lawful only from V.');
+    }
+
     this._kernel.captureInput(artifact);
     this._kernel.validateOutput('B');
     this._kernel.crystallize(`${artifact}\n\n∞0′: ${returnQuestion}`);
@@ -377,6 +391,29 @@ export class FractalEngine {
     const result = this._kernel.captureInput(input);
     this._kernel.exitSubPhase();
     return result;
+  }
+
+  private _assertSubPhaseBelongsToPhase(phase: Phase, subPhase: SubPhase): void {
+    if (!subPhase.startsWith(phase)) {
+      throw new Error(`Sub-phase ${subPhase} does not belong to phase ${phase}.`);
+    }
+  }
+
+  private _dedupeCorruption(codes: readonly CorruptionCode[]): readonly CorruptionCode[] {
+    return [...new Set(codes)];
+  }
+
+  private _detectTransitionCorruption(previousState: KernelState, targetPhase: Phase): readonly CorruptionCode[] {
+    const previousIndex = PHASE_ORDER.indexOf(previousState.phase);
+    const targetIndex = PHASE_ORDER.indexOf(targetPhase);
+
+    if (targetIndex > previousIndex + 1) return ['L¹'];
+    if (previousState.phase === 'S' && targetPhase !== 'S' && previousState.outputStates.X === 'NONE') return ['L¹'];
+    if (previousState.phase === 'G' && targetPhase === 'Q' && previousState.outputStates.Y === 'NONE') return ['L¹'];
+    if (previousState.phase === 'Q' && targetPhase === 'P' && previousState.outputStates.Z === 'NONE') return ['L¹'];
+    if (previousState.phase === 'P' && targetPhase === 'V' && previousState.outputStates.A === 'NONE') return ['L¹'];
+
+    return [];
   }
 
   private _enforceReturn(phase: Phase, aiReflection: string, watcher: WatcherResult): WatcherResult {
