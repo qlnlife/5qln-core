@@ -68,6 +68,19 @@ export { Kernel } from './kernel.js';
 export { FractalKernel } from './fractal-kernel.js';
 export type { DepthResult, DepthStackEntry } from './fractal-kernel.js';
 
+// ─── Fractal Engine ──────────────────────────────────────────
+export { FractalEngine } from './fractal-engine.js';
+export type {
+  PhaseConfidence,
+  PhaseSignal,
+  PhaseScore,
+  PhaseRoute,
+  SubPhaseRoute,
+  FormationTrailEntry,
+  FractalTurnRequest,
+  FractalTurnResult,
+} from './fractal-engine.js';
+
 // ─── Attestation ─────────────────────────────────────────────
 export { Attestation, canonicalJSON } from './attestation.js';
 
