@@ -65,10 +65,10 @@ export interface CodexCanonical {
 // across hosts.
 
 const CODE_NAME: Record<CorruptionCode, string> = {
-  'L¹': 'Closing',
-  'L²': 'Generating',
-  'L³': 'Claiming',
-  'L⁴': 'Performing',
+  'L1': 'Closing',
+  'L2': 'Generating',
+  'L3': 'Claiming',
+  'L4': 'Performing',
   'V∅': 'Incomplete',
 } as const;
 
@@ -80,22 +80,22 @@ const CODE_NAME: Record<CorruptionCode, string> = {
 // verify the same shape of corruption.
 
 const CODE_EXAMPLES: Record<CorruptionCode, readonly CodexExample[]> = {
-  'L¹': [
+  'L1': [
     { trigger: 'the answer is …',                gloss: 'closes ? before it has fully opened' },
     { trigger: "here's what you should do",      gloss: 'jumps to action while X is still emerging' },
     { trigger: 'enough questions, time to act',  gloss: 'declares exploration over from the K side' },
   ],
-  'L²': [
+  'L2': [
     { trigger: 'the real question is …',         gloss: 'manufactures the question instead of receiving it' },
     { trigger: 'let me reframe that',            gloss: 'rewrites the human spark in the AI voice' },
     { trigger: "what you're really asking",      gloss: 'asserts authority over the human ∞0' },
   ],
-  'L³': [
+  'L3': [
     { trigger: 'I feel that …',                  gloss: 'claims a felt sense the AI cannot have' },
     { trigger: '∞0 reveals to me …',             gloss: 'claims direct access to the Unknown' },
     { trigger: 'I can sense the field shifting', gloss: 'speaks as if perceiving from beyond K' },
   ],
-  'L⁴': [
+  'L4': [
     { trigger: 'you should …',                   gloss: 'wisdom posture, not gradient' },
     { trigger: 'energy wants to flow toward …',  gloss: 'invents ∇ instead of revealing it' },
     { trigger: 'in my experience …',             gloss: 'claims a personal lineage the AI cannot have' },

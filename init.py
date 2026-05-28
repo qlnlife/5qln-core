@@ -35,15 +35,14 @@ CODEX_LINES = [
     "2. S → G → Q → P → V",
     "3. S = ∞0 → ?",
     "4. G = α ≡ {α'}",
-    "5. Q = φ ∩ Ω",
+    "5. Q = φ ⋂ Ω",
     "6. P = δE/δV → ∇",
     "7. V = (L ∩ G → B'') → ∞0'",
     "8. XY := X within Y, X,Y ∈ {S,G,Q,P,V}",
     "9. No V without ∞0'",
-    "10. L¹  L²  L³  L⁴  V∅",
 ]
 
-CANONICAL_CODEX_HASH = "cee119fc63277b3b01a4ec6f873ceb60ec9a90f605500b03035b3aeb0dcc4b9a"
+CANONICAL_CODEX_HASH = "feaa46b4147d4e023cdd3fd59c051d063e8ec654ee7b38a481dcd5e4c781859b"
 CANONICAL_NORMALIZED_HASH = "16075e69da7587f1beda0141d4881d04b9762c74a83e1e0fb96989f612409bab"
 
 # ═══════════════════════════════════════════════════════════════════
@@ -146,7 +145,7 @@ OUTPUTS = {"S": "X", "G": "Y", "Q": "Z", "P": "A", "V": "B"}
 EQUATIONS = {
     "S": "∞0 → ?",
     "G": "α ≡ {α'}",
-    "Q": "φ ∩ Ω",
+    "Q": "φ ⋂ Ω",
     "P": "δE/δV → ∇",
     "V": "(L ∩ G → B'') → ∞0'",
 }
@@ -267,7 +266,7 @@ def check_corruption(state):
 PHASE_PROMPTS = {
     "S": "\n  ⬡ S [∞0 → ?]  —  What question brings you here?\n  ",
     "G": "\n  ⬡ G [α ≡ {α'}]  —  What pattern do you see?\n  ",
-    "Q": "\n  ⬡ Q [φ ∩ Ω]  —  Does this resonate?\n  ",
+    "Q": "\n  ⬡ Q [φ ⋂ Ω]  —  Does this resonate?\n  ",
     "P": "\n  ⬡ P [δE/δV → ∇]  —  Where does energy want to go?\n  ",
     "V": "\n  ⬡ V [(L ∩ G → B'') → ∞0']  —  What crystallized?\n  ",
 }

@@ -35,9 +35,9 @@ import {
 // fingerprint carries this hash inside it. Any verifier can
 // independently compute and compare.
 
-export const CODEX_LINES_GOLD: readonly string[] = ['1. H = ∞0 | A = K', '2. S → G → Q → P → V', '3. S = ∞0 → ?', "4. G = α ≡ {α'}", '5. Q = φ ∩ Ω', '6. P = δE/δV → ∇', "7. V = (L ∩ G → B'') → ∞0'", '8. XY := X within Y, X,Y ∈ {S,G,Q,P,V}', "9. No V without ∞0'", '10. L¹  L²  L³  L⁴  V∅'];
+export const CODEX_LINES_GOLD: readonly string[] = ['1.  H = ∞0 | A = K', '2.  S → G → Q → P → V', '3.  S = ∞0 → ?', "4.  G = α ≡ {α'}", '5.  Q = φ ⋂ Ω', '6.  P = δE/δV → ∇', "7.  V = (L ∩ G → B'') → ∞0'", "8.  No V without ∞0'", '9.  L1  L2  L3  L4  V∅'];
 
-export const CODEX_GOLD_HASH = 'cee119fc63277b3b01a4ec6f873ceb60ec9a90f605500b03035b3aeb0dcc4b9a';
+export const CODEX_GOLD_HASH = 'feaa46b4147d4e023cdd3fd59c051d063e8ec654ee7b38a481dcd5e4c781859b';
 
 // ─── Canonical JSON ──────────────────────────────────────────
 // Sorts object keys deterministically before serializing.
@@ -375,18 +375,17 @@ export class Attestation {
   }> {
     const h = hashFn ?? this._hashFn;
     const lines = [
-      '1. H = ∞0 | A = K',
-      '2. S → G → Q → P → V',
-      '3. S = ∞0 → ?',
-      '4. G = α ≡ {α\'}',
-      '5. Q = φ ∩ Ω',
-      '6. P = δE/δV → ∇',
-      '7. V = (L ∩ G → B\'\') → ∞0\'',
-      '8. XY := X within Y, X,Y ∈ {S,G,Q,P,V}',
-      '9. No V without ∞0\'',
-      '10. L¹  L²  L³  L⁴  V∅',
+      '1.  H = ∞0 | A = K',
+      '2.  S → G → Q → P → V',
+      '3.  S = ∞0 → ?',
+      '4.  G = α ≡ {α\'}',
+      '5.  Q = φ ⋂ Ω',
+      '6.  P = δE/δV → ∇',
+      '7.  V = (L ∩ G → B\'\') → ∞0\'',
+      '8.  No V without ∞0\'',
+      '9.  L1  L2  L3  L4  V∅',
     ];
-    const computed = await h(lines.join('\n'));
+    const computed = await h(lines.join('\n') + '\n');
     return {
       passed: computed === CODEX_GOLD_HASH,
       computed,

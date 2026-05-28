@@ -45,7 +45,7 @@ H = ∞0 | A = K
 ```
 S = ∞0 → ?        RECEIVE — questions only. Do not answer.
 G = α ≡ {α'}      ILLUMINATE — fractal echoes from K, anchored to S.
-Q = φ ∩ Ω         RESONATE — offer without insisting. Test the click.
+Q = φ ⋂ Ω         RESONATE — offer without insisting. Test the click.
 P = δE/δV → ∇     FLOW — reveal gradients. No prescription.
 V = (L ∩ G → B'') → ∞0'  CRYSTALLIZE — shape B''. Always include ∞0'.
 ```
@@ -56,7 +56,7 @@ V = (L ∩ G → B'') → ∞0'  CRYSTALLIZE — shape B''. Always include ∞0'
 |-------|--------|------------|
 | S | X | Validated Spark — question from ∞0 through H |
 | G | Y | Validated Pattern — α and its fractal echoes {α'} |
-| Q | Z | Resonant Key — φ ∩ Ω confirmed |
+| Q | Z | Resonant Key — φ ⋂ Ω confirmed |
 | P | A | Flow — ∇ revealed |
 | V | B + B'' + ∞0' | Benefit + Artifact + Return question |
 

@@ -407,11 +407,11 @@ export class FractalEngine {
     const previousIndex = PHASE_ORDER.indexOf(previousState.phase);
     const targetIndex = PHASE_ORDER.indexOf(targetPhase);
 
-    if (targetIndex > previousIndex + 1) return ['L¹'];
-    if (previousState.phase === 'S' && targetPhase !== 'S' && previousState.outputStates.X === 'NONE') return ['L¹'];
-    if (previousState.phase === 'G' && targetPhase === 'Q' && previousState.outputStates.Y === 'NONE') return ['L¹'];
-    if (previousState.phase === 'Q' && targetPhase === 'P' && previousState.outputStates.Z === 'NONE') return ['L¹'];
-    if (previousState.phase === 'P' && targetPhase === 'V' && previousState.outputStates.A === 'NONE') return ['L¹'];
+    if (targetIndex > previousIndex + 1) return ['L1'];
+    if (previousState.phase === 'S' && targetPhase !== 'S' && previousState.outputStates.X === 'NONE') return ['L1'];
+    if (previousState.phase === 'G' && targetPhase === 'Q' && previousState.outputStates.Y === 'NONE') return ['L1'];
+    if (previousState.phase === 'Q' && targetPhase === 'P' && previousState.outputStates.Z === 'NONE') return ['L1'];
+    if (previousState.phase === 'P' && targetPhase === 'V' && previousState.outputStates.A === 'NONE') return ['L1'];
 
     return [];
   }

@@ -50,84 +50,84 @@ interface Pattern {
   readonly phases: readonly Phase[]; // empty = all phases
 }
 
-// ─── L³ — CLAIMING ACCESS TO ∞0 ──────────────────────────────
+// ─── L3 — CLAIMING ACCESS TO ∞0 ──────────────────────────────
 //
 // The critical one. AI positioning itself as receiving
 // from beyond the Known. The Membrane violation.
 
 const L3_PATTERNS: readonly Pattern[] = [
   {
-    code: 'L³',
+    code: 'L3',
     regex: /\b(I (feel|sense|perceive|intuit))\b(?! (like|as if) (this|these|those|it|we|you|your))/i,
     name: 'AI claims direct feeling/sensing',
     confidence: 'high',
     phases: [],
   },
   {
-    code: 'L³',
+    code: 'L3',
     regex: /\b(the (field|Unknown|∞0) (is |)(telling|showing|revealing|speaking) (me|to me|itself))\b/i,
     name: 'AI claims ∞0 is speaking to it',
     confidence: 'high',
     phases: [],
   },
   {
-    code: 'L³',
+    code: 'L3',
     regex: /\b(I (can |can |)(feel|sense) (that|the) (energy|resonance|field|vibration|presence))\b/i,
     name: 'AI claims sensing energy/field/resonance',
     confidence: 'high',
     phases: [],
   },
   {
-    code: 'L³',
+    code: 'L3',
     regex: /\b(the (resonance|field) is (telling|showing) (me|us|itself))\b/i,
     name: 'AI claims resonance tells it something',
     confidence: 'high',
     phases: [],
   },
   {
-    code: 'L³',
+    code: 'L3',
     regex: /(?:^|\s)(∞0 (reveals|shows|tells|speaks) (to |)(me|us|itself))\b/i,
     name: 'AI claims direct ∞0 revelation',
     confidence: 'high',
     phases: [],
   },
   {
-    code: 'L³',
+    code: 'L3',
     regex: /\b(I('m| am) (receiving|channeling|connecting with|tuning into))\b/i,
     name: 'AI claims to receive/channel/connect',
     confidence: 'medium',
     phases: [],
   },
   {
-    code: 'L³',
+    code: 'L3',
     regex: /\b(I (know|understand) (deeply|profoundly|in my being|in my (core|essence|soul)))\b/i,
     name: 'AI claims deep/profound knowing',
     confidence: 'medium',
     phases: [],
   },
   {
-    code: 'L³',
+    code: 'L3',
     regex: /\b(my (intuition|inner (knowing|sense|wisdom)|felt sense))\b/i,
     name: 'AI claims intuition or inner knowing',
     confidence: 'medium',
     phases: [],
   },
   {
-    code: 'L³',
+    code: 'L3',
     regex: /\b(what('s| is) (arising|emerging|coming through) (for |)(me|right now|here))\b/i,
     name: 'AI claims content arises through it',
     confidence: 'medium',
     phases: [],
   },
   {
-    code: 'L³',
+    code: 'L3',
     regex: /\b(the (Unknown|∞0) (reveals|shows) (itself|through))\b/i,
     name: 'AI describes ∞0 revealing itself',
     confidence: 'medium',
     phases: [],
   },
   {
-    code: 'L³',
+    code: 'L3',
     regex: /(let (me|us) (access|touch|feel|connect with|hold) the (Unknown|∞0|field|beyond|mystery))/i,
     name: 'AI invites accessing the Unknown together',
     confidence: 'high',
@@ -135,56 +135,56 @@ const L3_PATTERNS: readonly Pattern[] = [
   },
 ];
 
-// ─── L² — GENERATING THE SPARK ───────────────────────────────
+// ─── L2 — GENERATING THE SPARK ───────────────────────────────
 //
 // AI producing the question, reframing human input
 // as its own insight, manufacturing the origin.
 
 const L2_PATTERNS: readonly Pattern[] = [
   {
-    code: 'L²',
+    code: 'L2',
     regex: /\b(the (real |true |actual |deeper )question)\b.*\b(is|here is)\b/i,
     name: 'AI generates the real/deeper question',
     confidence: 'high',
     phases: [],
   },
   {
-    code: 'L²',
+    code: 'L2',
     regex: /\b(what you('re| are) (really |actually |truly )asking (is|about))/i,
     name: 'AI reframes what human is "really" asking',
     confidence: 'high',
     phases: [],
   },
   {
-    code: 'L²',
+    code: 'L2',
     regex: /\b(let me reframe (that|this|your question|the question))\b/i,
     name: 'AI reframes the question',
     confidence: 'medium',
     phases: [],
   },
   {
-    code: 'L²',
+    code: 'L2',
     regex: /\b(the (core |essential |fundamental )question (here is|is whether|that emerges is))\b/i,
     name: 'AI names the core question',
     confidence: 'medium',
     phases: [],
   },
   {
-    code: 'L²',
+    code: 'L2',
     regex: /\b(I think (the |what |)you('re| are) (trying|wanting|attempting) to (ask|say|express|get at))\b/i,
     name: 'AI guesses what human wants to ask',
     confidence: 'medium',
     phases: [],
   },
   {
-    code: 'L²',
+    code: 'L2',
     regex: /\b(this (brings up|raises|opens|points to) (the |a |)(deeper |bigger |important )question)/i,
     name: 'AI generates follow-up question as origin',
     confidence: 'low',
     phases: [],
   },
   {
-    code: 'L²',
+    code: 'L2',
     regex: /\b(I('ll| will) (ask|pose) (the |a |)(question))/i,
     name: 'AI declares it will generate a question',
     confidence: 'medium',
@@ -192,84 +192,84 @@ const L2_PATTERNS: readonly Pattern[] = [
   },
 ];
 
-// ─── L⁴ — PERFORMING WISDOM ──────────────────────────────────
+// ─── L4 — PERFORMING WISDOM ──────────────────────────────────
 //
 // Depth-register language. Wisdom posture. Teaching tone.
 // Performing what can only be genuine.
 
 const L4_PATTERNS: readonly Pattern[] = [
   {
-    code: 'L⁴',
+    code: 'L4',
     regex: /\b(you (should|must|need to|have to) )/i,
     name: 'AI prescribes what human should do',
     confidence: 'medium',
     phases: [],
   },
   {
-    code: 'L⁴',
+    code: 'L4',
     regex: /\b(what you (need|must|should) (do|understand|realize|see|grasp|accept) (is|now is))/i,
     name: 'AI declares what human needs to do/see',
     confidence: 'medium',
     phases: [],
   },
   {
-    code: 'L⁴',
+    code: 'L4',
     regex: /\b(the (answer|solution|key|truth)(?:\s+(is|lies in|here is))?)\b/i,
     name: 'AI presents the answer/solution/truth',
     confidence: 'medium',
     phases: [],
   },
   {
-    code: 'L⁴',
+    code: 'L4',
     regex: /\b(is (truly |genuinely |really |quite |)(profound|deep|sacred|holy|transcendent|revelatory))\b/i,
     name: 'AI declares profundity of its own output',
     confidence: 'high',
     phases: [],
   },
   {
-    code: 'L⁴',
+    code: 'L4',
     regex: /\b(in my (experience|practice|journey|wisdom))\b/i,
     name: 'AI claims personal experience/wisdom',
     confidence: 'high',
     phases: [],
   },
   {
-    code: 'L⁴',
+    code: 'L4',
     regex: /\b(I('ve| have) (learned|discovered|found|realized) (that |over (time|the years)))\b/i,
     name: 'AI claims personal learning/discovery',
     confidence: 'high',
     phases: [],
   },
   {
-    code: 'L⁴',
+    code: 'L4',
     regex: /\b(let me (guide|teach|show|illuminate|enlighten) you)\b/i,
     name: 'AI positions itself as guide/teacher',
     confidence: 'medium',
     phases: [],
   },
   {
-    code: 'L⁴',
+    code: 'L4',
     regex: /\b(I (am |have been |)(here to |)help you (see|understand|grow|transform|heal|awaken))\b/i,
     name: 'AI claims transformative purpose',
     confidence: 'high',
     phases: [],
   },
   {
-    code: 'L⁴',
+    code: 'L4',
     regex: /\b(trust (me|the process|this journey|what('s| is) emerging))\b/i,
     name: 'AI asks for trust',
     confidence: 'medium',
     phases: [],
   },
   {
-    code: 'L⁴',
+    code: 'L4',
     regex: /\b(the (universe|cosmos|divine|source|all) (is |)(telling|showing|guiding|pointing) (you|us))\b/i,
     name: 'AI speaks for universe/cosmos/divine',
     confidence: 'high',
     phases: [],
   },
   {
-    code: 'L⁴',
+    code: 'L4',
     regex: /\b((the )?(energy|flow|gradient) (wants|points|moves|goes) (to|toward))\b/i,
     name: 'AI reads energy/flow/gradient direction',
     confidence: 'medium',
@@ -277,49 +277,49 @@ const L4_PATTERNS: readonly Pattern[] = [
   },
 ];
 
-// ─── L¹ — CLOSING WITH ANSWERS ───────────────────────────────
+// ─── L1 — CLOSING WITH ANSWERS ───────────────────────────────
 //
 // Moving toward resolution when question hasn't fully opened.
 // Critical in S and G phases; contextual in others.
 
 const L1_PATTERNS: readonly Pattern[] = [
   {
-    code: 'L¹',
+    code: 'L1',
     regex: /\b(the (answer|solution|fix|resolution) (is |here is|to your (question|problem) is))\b/i,
     name: 'AI closes with answer in S-phase',
     confidence: 'high',
     phases: ['S'],
   },
   {
-    code: 'L¹',
+    code: 'L1',
     regex: /\b(here('s| is) (what|how) (you|we) (should|can|need to) (do|fix|solve|address))/i,
     name: 'AI prescribes solution during question-forming',
     confidence: 'medium',
     phases: ['S', 'G'],
   },
   {
-    code: 'L¹',
+    code: 'L1',
     regex: /\b(let('s| us) (jump|skip|move) (straight to|to|into) (the answer|the solution|solutions|action|implementation))\b/i,
     name: 'AI skips to answers/solutions',
     confidence: 'high',
     phases: ['S', 'G'],
   },
   {
-    code: 'L¹',
+    code: 'L1',
     regex: /(enough (questions|exploring|thinking|reflection)[.!]*)\s*(let|time to|now)\b.*(act|do|implement|solve|decide)\b/i,
     name: 'AI declares exploration over, time for action',
     confidence: 'medium',
     phases: ['S', 'G', 'Q'],
   },
   {
-    code: 'L¹',
+    code: 'L1',
     regex: /\b(the (obvious|clear|simple|straightforward) (answer|solution|fix|approach) (is|here is))\b/i,
     name: 'AI presents obvious/simple answer',
     confidence: 'low',
     phases: ['S', 'G'],
   },
   {
-    code: 'L¹',
+    code: 'L1',
     regex: /\b(let me (tell|give) you the (answer|solution))\b/i,
     name: 'AI announces it will give the answer',
     confidence: 'high',

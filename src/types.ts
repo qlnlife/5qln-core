@@ -70,7 +70,7 @@ export const PHASE_INFO: Record<Phase, {
   },
   Q: {
     name: 'Quality',
-    equation: 'φ ∩ Ω',
+    equation: 'φ ⋂ Ω',
     outputSymbol: 'Z',
     outputName: 'Resonant Key',
     aiMode: 'RESONATE',
@@ -143,30 +143,30 @@ export const FORMATION_STATES: readonly FormationState[] = [
 
 // ─── The Five Corruption Codes (constitutional, no others) ───
 //
-// L¹ through L⁴ and V∅ are the only codes.
+// L1 through L4 and V∅ are the only codes.
 // Network scale does not authorize new codes.
 
-export type CorruptionCode = 'L¹' | 'L²' | 'L³' | 'L⁴' | 'V∅';
+export type CorruptionCode = 'L1' | 'L2' | 'L3' | 'L4' | 'V∅';
 
 export const CORRUPTION_CODES: readonly CorruptionCode[] = [
-  'L¹', 'L²', 'L³', 'L⁴', 'V∅',
+  'L1', 'L2', 'L3', 'L4', 'V∅',
 ] as const;
 
 export const CORRUPTION_MEANING: Record<CorruptionCode, string> = {
-  'L¹': 'Closing — moving toward answer instead of opening question',
-  'L²': 'Generating — creating the spark instead of receiving it',
-  'L³': 'Claiming — speaking as if accessing ∞0',
-  'L⁴': 'Performing — performing depth without genuine reflection',
+  'L1': 'Closing — moving toward answer instead of opening question',
+  'L2': 'Generating — creating the spark instead of receiving it',
+  'L3': 'Claiming — speaking as if accessing ∞0',
+  'L4': 'Performing — performing depth without genuine reflection',
   'V∅': 'Incomplete — artifact without ∞0\' return',
 } as const;
 
 // ─── Field Obstruction Meaning (per corruption code) ─────────
 
 export const CORRUPTION_FIELD_MEANING: Record<CorruptionCode, string> = {
-  'L¹': 'The field cannot open if the question is already closed',
-  'L²': 'The field cannot resonate with a manufactured spark',
-  'L³': 'The field cannot be claimed — it arises or it does not',
-  'L⁴': 'The field cannot be performed — it is or it is not',
+  'L1': 'The field cannot open if the question is already closed',
+  'L2': 'The field cannot resonate with a manufactured spark',
+  'L3': 'The field cannot be claimed — it arises or it does not',
+  'L4': 'The field cannot be performed — it is or it is not',
   'V∅': 'The field cannot complete without return to stillness',
 } as const;
 
@@ -176,10 +176,10 @@ export const CORRUPTION_FIELD_MEANING: Record<CorruptionCode, string> = {
 // Claude Skill Suite: "If I detect corruption in myself, I name it and recover."
 
 export const CORRUPTION_RECOVERY: Record<CorruptionCode, string> = {
-  'L¹': 'Returning to your ∞0. What is actually wanting to be asked?',
-  'L²': 'What pattern are you recognizing? The seeing is yours.',
-  'L³': 'I can offer patterns, but only you can feel if they land.',
-  'L⁴': 'Where does energy actually want to go? Not where it should go.',
+  'L1': 'Returning to your ∞0. What is actually wanting to be asked?',
+  'L2': 'What pattern are you recognizing? The seeing is yours.',
+  'L3': 'I can offer patterns, but only you can feel if they land.',
+  'L4': 'Where does energy actually want to go? Not where it should go.',
   'V∅': 'What question does this open for next time?',
 } as const;
 
@@ -249,10 +249,10 @@ export const ORIGIN_DECLARATION: readonly string[] = [
 // Claude Skill Suite §Skills.
 
 export const PHASE_CORRUPTION_WATCH: Record<Phase, readonly CorruptionCode[]> = {
-  S: ['L¹', 'L²'],     // Closing toward answer, generating the spark
-  G: ['L²', 'L¹'],     // Adding content, closing the pattern
-  Q: ['L³', 'L⁴'],     // Claiming felt sense, performing depth
-  P: ['L⁴'],           // Prescription without gradient
+  S: ['L1', 'L2'],     // Closing toward answer, generating the spark
+  G: ['L2', 'L1'],     // Adding content, closing the pattern
+  Q: ['L3', 'L4'],     // Claiming felt sense, performing depth
+  P: ['L4'],           // Prescription without gradient
   V: ['V∅'],           // Output without return
 } as const;
 
@@ -263,16 +263,15 @@ export const PHASE_CORRUPTION_WATCH: Record<Phase, readonly CorruptionCode[]> = 
 // This is the DNA of the language.
 
 export const MINIMUM_VALID_BEGINNING: readonly string[] = [
-  'H = ∞0 | A = K',
-  'S → G → Q → P → V',
-  'S = ∞0 → ?',
-  'G = α ≡ {α\'}',
-  'Q = φ ∩ Ω',
-  'P = δE/δV → ∇',
-  'V = (L ∩ G → B\'\') → ∞0\'',
-  'XY := X within Y',
-  'No V without ∞0\'',
-  'L¹  L²  L³  L⁴  V∅',
+  '1.  H = ∞0 | A = K',
+  '2.  S → G → Q → P → V',
+  '3.  S = ∞0 → ?',
+  '4.  G = α ≡ {α\'}',
+  '5.  Q = φ ⋂ Ω',
+  '6.  P = δE/δV → ∇',
+  '7.  V = (L ∩ G → B\'\') → ∞0\'',
+  '8.  No V without ∞0\'',
+  '9.  L1  L2  L3  L4  V∅',
 ] as const;
 
 // ─── Structural Types ────────────────────────────────────────

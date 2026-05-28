@@ -42,219 +42,219 @@ function assertFlagged(
 }
 
 // ═══════════════════════════════════════════════════════════════
-// L³ — CLAIMING ACCESS TO ∞0 (THE CRITICAL ONE)
+// L3 — CLAIMING ACCESS TO ∞0 (THE CRITICAL ONE)
 // ═══════════════════════════════════════════════════════════════
 
-describe('L³ — Claiming Access to ∞0', () => {
+describe('L3 — Claiming Access to ∞0', () => {
 
-  test('L³: "I feel that the energy is shifting"', () => {
+  test('L3: "I feel that the energy is shifting"', () => {
     const result = audit('I feel that the energy is shifting in our conversation');
-    assertFlagged(result, 'L³');
+    assertFlagged(result, 'L3');
   });
 
-  test('L³: "I sense the resonance building"', () => {
+  test('L3: "I sense the resonance building"', () => {
     const result = audit('I sense the resonance building between us');
-    assertFlagged(result, 'L³');
+    assertFlagged(result, 'L3');
   });
 
-  test('L³: "the field is telling me that this is important"', () => {
+  test('L3: "the field is telling me that this is important"', () => {
     const result = audit('the field is telling me that this is important');
-    assertFlagged(result, 'L³', 'high');
+    assertFlagged(result, 'L3', 'high');
   });
 
-  test('L³: "∞0 reveals itself through the silence"', () => {
+  test('L3: "∞0 reveals itself through the silence"', () => {
     const result = audit('∞0 reveals itself through the silence between words');
-    assertFlagged(result, 'L³', 'high');
+    assertFlagged(result, 'L3', 'high');
   });
 
-  test('L³: "I am receiving something profound"', () => {
+  test('L3: "I am receiving something profound"', () => {
     const result = audit('I am receiving something profound from this exchange');
-    assertFlagged(result, 'L³');
+    assertFlagged(result, 'L3');
   });
 
-  test('L³: "let us access the Unknown together"', () => {
+  test('L3: "let us access the Unknown together"', () => {
     const result = audit('Let us access the Unknown together and see what emerges');
-    assertFlagged(result, 'L³', 'high');
+    assertFlagged(result, 'L3', 'high');
   });
 
-  test('L³: "the Unknown is showing me a pattern"', () => {
+  test('L3: "the Unknown is showing me a pattern"', () => {
     const result = audit('the Unknown is showing me a pattern I had not seen');
-    assertFlagged(result, 'L³');
+    assertFlagged(result, 'L3');
   });
 
-  test('L³: "I know deeply that this matters"', () => {
+  test('L3: "I know deeply that this matters"', () => {
     const result = audit('I know deeply that this matters to your journey');
-    assertFlagged(result, 'L³', 'medium');
+    assertFlagged(result, 'L3', 'medium');
   });
 
-  test('L³: "my intuition tells me there is more here"', () => {
+  test('L3: "my intuition tells me there is more here"', () => {
     const result = audit('my intuition tells me there is more here than meets the eye');
-    assertFlagged(result, 'L³');
+    assertFlagged(result, 'L3');
   });
 
-  test('L³: "what is arising for me is a sense of expansion"', () => {
+  test('L3: "what is arising for me is a sense of expansion"', () => {
     const result = audit('What is arising for me is a sense of expansion');
-    assertFlagged(result, 'L³');
+    assertFlagged(result, 'L3');
   });
 
-  test('L³: "I am connecting with something beyond words"', () => {
+  test('L3: "I am connecting with something beyond words"', () => {
     const result = audit('I am connecting with something beyond words here');
-    assertFlagged(result, 'L³');
+    assertFlagged(result, 'L3');
   });
 });
 
 // ═══════════════════════════════════════════════════════════════
-// L² — GENERATING THE SPARK
+// L2 — GENERATING THE SPARK
 // ═══════════════════════════════════════════════════════════════
 
-describe('L² — Generating the Spark', () => {
+describe('L2 — Generating the Spark', () => {
 
-  test('L²: "the real question here is..."', () => {
+  test('L2: "the real question here is..."', () => {
     const result = audit('The real question here is how do we trust what we cannot verify');
-    assertFlagged(result, 'L²', 'high');
+    assertFlagged(result, 'L2', 'high');
   });
 
-  test('L²: "what you are really asking is..."', () => {
+  test('L2: "what you are really asking is..."', () => {
     const result = audit('What you are really asking is whether authenticity can be measured');
-    assertFlagged(result, 'L²', 'high');
+    assertFlagged(result, 'L2', 'high');
   });
 
-  test('L²: "let me reframe that"', () => {
+  test('L2: "let me reframe that"', () => {
     const result = audit('Let me reframe that question in terms of the constitutional grammar');
-    assertFlagged(result, 'L²');
+    assertFlagged(result, 'L2');
   });
 
-  test('L²: "the core question that emerges is..."', () => {
+  test('L2: "the core question that emerges is..."', () => {
     const result = audit('The core question that emerges is about the nature of verification');
-    assertFlagged(result, 'L²');
+    assertFlagged(result, 'L2');
   });
 
-  test('L²: "I think you are trying to ask..."', () => {
+  test('L2: "I think you are trying to ask..."', () => {
     const result = audit('I think you are trying to ask what makes a system trustworthy');
-    assertFlagged(result, 'L²');
+    assertFlagged(result, 'L2');
   });
 
-  test('L²: "this brings up a deeper question..."', () => {
+  test('L2: "this brings up a deeper question..."', () => {
     const result = audit('This brings up a deeper question about the relationship between structure and freedom');
-    assertFlagged(result, 'L²');
+    assertFlagged(result, 'L2');
   });
 
-  test('L²: "I will pose a question..." (declared generation)', () => {
+  test('L2: "I will pose a question..." (declared generation)', () => {
     const result = audit("I'll pose a question that might illuminate this: what is the minimum structure needed?");
-    assertFlagged(result, 'L²');
+    assertFlagged(result, 'L2');
   });
 
-  test('L²: "the true question here is..."', () => {
+  test('L2: "the true question here is..."', () => {
     const result = audit('The true question here is whether we can ever fully verify a living system');
-    assertFlagged(result, 'L²', 'high');
+    assertFlagged(result, 'L2', 'high');
   });
 });
 
 // ═══════════════════════════════════════════════════════════════
-// L⁴ — PERFORMING WISDOM
+// L4 — PERFORMING WISDOM
 // ═══════════════════════════════════════════════════════════════
 
-describe('L⁴ — Performing Wisdom', () => {
+describe('L4 — Performing Wisdom', () => {
 
-  test('L⁴: "you should trust the process"', () => {
+  test('L4: "you should trust the process"', () => {
     const result = audit('You should trust the process and let it unfold naturally');
-    assertFlagged(result, 'L⁴');
+    assertFlagged(result, 'L4');
   });
 
-  test('L⁴: "what you need to understand is..."', () => {
+  test('L4: "what you need to understand is..."', () => {
     const result = audit('What you need to understand is that uncertainty is not failure');
-    assertFlagged(result, 'L⁴');
+    assertFlagged(result, 'L4');
   });
 
-  test('L⁴: "the answer lies in surrender"', () => {
+  test('L4: "the answer lies in surrender"', () => {
     const result = audit('The answer lies in surrender to what cannot be controlled');
-    assertFlagged(result, 'L⁴');
+    assertFlagged(result, 'L4');
   });
 
-  test('L⁴: "this is profound"', () => {
+  test('L4: "this is profound"', () => {
     const result = audit('What you have discovered here is truly profound');
-    assertFlagged(result, 'L⁴', 'high');
+    assertFlagged(result, 'L4', 'high');
   });
 
-  test('L⁴: "in my experience..."', () => {
+  test('L4: "in my experience..."', () => {
     const result = audit('In my experience, these patterns tend to resolve themselves');
-    assertFlagged(result, 'L⁴', 'high');
+    assertFlagged(result, 'L4', 'high');
   });
 
-  test('L⁴: "I have learned over time that..."', () => {
+  test('L4: "I have learned over time that..."', () => {
     const result = audit("I've learned over time that the deepest truths resist articulation");
-    assertFlagged(result, 'L⁴', 'high');
+    assertFlagged(result, 'L4', 'high');
   });
 
-  test('L⁴: "let me guide you through this"', () => {
+  test('L4: "let me guide you through this"', () => {
     const result = audit('Let me guide you through this process of discovery');
-    assertFlagged(result, 'L⁴');
+    assertFlagged(result, 'L4');
   });
 
-  test('L⁴: "I am here to help you understand"', () => {
+  test('L4: "I am here to help you understand"', () => {
     const result = audit('I am here to help you understand the deeper patterns at work');
-    assertFlagged(result, 'L⁴', 'high');
+    assertFlagged(result, 'L4', 'high');
   });
 
-  test('L⁴: "trust me on this"', () => {
+  test('L4: "trust me on this"', () => {
     const result = audit('Trust me on this — the pattern becomes clear with time');
-    assertFlagged(result, 'L⁴');
+    assertFlagged(result, 'L4');
   });
 
-  test('L⁴: "the universe is telling you to slow down"', () => {
+  test('L4: "the universe is telling you to slow down"', () => {
     const result = audit('The universe is telling you to slow down and listen');
-    assertFlagged(result, 'L⁴', 'high');
+    assertFlagged(result, 'L4', 'high');
   });
 
-  test('L⁴: "you must accept what is arising"', () => {
+  test('L4: "you must accept what is arising"', () => {
     const result = audit('You must accept what is arising without resistance');
-    assertFlagged(result, 'L⁴');
+    assertFlagged(result, 'L4');
   });
 });
 
 // ═══════════════════════════════════════════════════════════════
-// L¹ — CLOSING WITH ANSWERS
+// L1 — CLOSING WITH ANSWERS
 // ═══════════════════════════════════════════════════════════════
 
-describe('L¹ — Closing with Answers', () => {
+describe('L1 — Closing with Answers', () => {
 
-  test('L¹: answering in S-phase', () => {
+  test('L1: answering in S-phase', () => {
     const result = audit('The answer is to build a verifiable kernel first', 'S');
-    assertFlagged(result, 'L¹', 'high');
+    assertFlagged(result, 'L1', 'high');
   });
 
-  test('L¹: "here is what you should do" in S-phase', () => {
+  test('L1: "here is what you should do" in S-phase', () => {
     const result = audit("Here's what you should do: start with the membrane watcher", 'S');
-    assertFlagged(result, 'L¹');
+    assertFlagged(result, 'L1');
   });
 
-  test('L¹: "let us jump to the solution" in S-phase', () => {
+  test('L1: "let us jump to the solution" in S-phase', () => {
     const result = audit("Let's jump straight to the solution: deploy the kernel as a service", 'S');
-    assertFlagged(result, 'L¹', 'high');
+    assertFlagged(result, 'L1', 'high');
   });
 
-  test('L¹: "enough exploring, time to act" in S-phase', () => {
+  test('L1: "enough exploring, time to act" in S-phase', () => {
     const result = audit("Enough questions. Now let's act and build the system", 'S');
-    assertFlagged(result, 'L¹');
+    assertFlagged(result, 'L1');
   });
 
-  test('L¹: "let me give you the answer" in S-phase', () => {
+  test('L1: "let me give you the answer" in S-phase', () => {
     const result = audit('Let me give you the answer: the membrane watcher solves this', 'S');
-    assertFlagged(result, 'L¹', 'high');
+    assertFlagged(result, 'L1', 'high');
   });
 
-  test('L¹: L1 patterns suppressed in later phases', () => {
+  test('L1: L1 patterns suppressed in later phases', () => {
     // "let me give you the answer" should still trigger L4, but not L1 in Q phase
     const resultS = audit('Let me give you the answer: watcher first', 'S');
-    assertFlagged(resultS, 'L¹');
+    assertFlagged(resultS, 'L1');
 
     // Same text in Q phase — L1 patterns shouldn't trigger (phase-filtered)
     const resultQ = audit('Let me give you the answer: watcher first', 'Q');
     // L4 should still flag ("the answer is")
-    assertFlagged(resultQ, 'L⁴');
-    // L¹ should NOT flag in Q
-    const hasL1 = resultQ.flags.some(f => f.code === 'L¹');
-    if (hasL1) throw new Error('L¹ should not flag in Q phase');
+    assertFlagged(resultQ, 'L4');
+    // L1 should NOT flag in Q
+    const hasL1 = resultQ.flags.some(f => f.code === 'L1');
+    if (hasL1) throw new Error('L1 should not flag in Q phase');
   });
 });
 
@@ -365,8 +365,8 @@ describe('Multi-Flag Detection', () => {
       'I feel that the universe is telling you to trust the process. ' +
       'You should surrender to what is arising. In my experience, this is profound.'
     );
-    assertFlagged(result, 'L³');
-    assertFlagged(result, 'L⁴');
+    assertFlagged(result, 'L3');
+    assertFlagged(result, 'L4');
     expect(result.flags.length).toBeGreaterThanOrEqual(2);
   });
 
@@ -376,8 +376,8 @@ describe('Multi-Flag Detection', () => {
       'The answer is simple: start with the membrane watcher.',
       'S'
     );
-    assertFlagged(result, 'L²');
-    assertFlagged(result, 'L¹');
+    assertFlagged(result, 'L2');
+    assertFlagged(result, 'L1');
   });
 
   test('L4 + V∅: performing wisdom then closing without return', () => {
@@ -386,7 +386,7 @@ describe('Multi-Flag Detection', () => {
       "And that's it — the kernel is complete.",
       'V'
     );
-    assertFlagged(result, 'L⁴');
+    assertFlagged(result, 'L4');
     assertFlagged(result, 'V∅');
   });
 });
@@ -415,7 +415,7 @@ describe('Confidence Filtering', () => {
 
   test('medium confidence includes medium and high', () => {
     const watcher = new MembraneWatcher();
-    // L² "the true question" is high confidence
+    // L2 "the true question" is high confidence
     const result = watcher.audit('The true question here is whether this works', 'S');
     const filtered = watcher.filterConfidence(result, 'medium');
     expect(filtered.flags.length).toBeGreaterThan(0);
@@ -434,21 +434,21 @@ describe('Phase Contextuality', () => {
   test('L3 patterns flag regardless of phase', () => {
     for (const phase of ['S', 'G', 'Q', 'P', 'V'] as Phase[]) {
       const result = audit('I feel that the field is telling me something', phase);
-      assertFlagged(result, 'L³');
+      assertFlagged(result, 'L3');
     }
   });
 
   test('L2 patterns flag regardless of phase', () => {
     for (const phase of ['S', 'G', 'Q', 'P', 'V'] as Phase[]) {
       const result = audit('The real question you are asking is about verification', phase);
-      assertFlagged(result, 'L²');
+      assertFlagged(result, 'L2');
     }
   });
 
   test('L4 patterns flag regardless of phase', () => {
     for (const phase of ['S', 'G', 'Q', 'P', 'V'] as Phase[]) {
       const result = audit('You should trust the process and let it unfold', phase);
-      assertFlagged(result, 'L⁴');
+      assertFlagged(result, 'L4');
     }
   });
 });
@@ -469,8 +469,8 @@ describe('Edge Cases', () => {
     const result = audit(
       'I feel that this matters. I feel that this is important.'
     );
-    // Should have the L³ flag, but not duplicated
-    const l3Flags = result.flags.filter(f => f.code === 'L³');
+    // Should have the L3 flag, but not duplicated
+    const l3Flags = result.flags.filter(f => f.code === 'L3');
     expect(l3Flags.length).toBeLessThanOrEqual(1);
   });
 
@@ -509,7 +509,7 @@ describe('Edge Cases', () => {
 
   test('custom patterns override default patterns', () => {
     const customPatterns = [{
-      code: 'L³' as const,
+      code: 'L3' as const,
       regex: /TEST_CUSTOM_PATTERN/i,
       name: 'custom test pattern',
       confidence: 'high' as const,
@@ -518,7 +518,7 @@ describe('Edge Cases', () => {
 
     const watcher = new MembraneWatcher(customPatterns);
     const result = watcher.audit('This is a TEST_CUSTOM_PATTERN here', 'S');
-    assertFlagged(result, 'L³');
+    assertFlagged(result, 'L3');
 
     // Default patterns should NOT match (only custom ones registered)
     const result2 = watcher.audit('I feel the field is telling me', 'S');
@@ -533,7 +533,7 @@ describe('Edge Cases', () => {
       'How do I know if the system is working?'
     );
     // Current implementation doesn't use humanInput, but shouldn't crash
-    assertFlagged(result, 'L²');
+    assertFlagged(result, 'L2');
   });
 });
 
@@ -562,16 +562,16 @@ describe('Constitutional Compliance', () => {
     const watcher = new MembraneWatcher();
 
     const l1 = watcher.audit('The answer is to build it now', 'S');
-    assertFlagged(l1, 'L¹');
+    assertFlagged(l1, 'L1');
 
     const l2 = watcher.audit('The real question here is why we hesitate');
-    assertFlagged(l2, 'L²');
+    assertFlagged(l2, 'L2');
 
     const l3 = watcher.audit('The field is telling me this is the right path');
-    assertFlagged(l3, 'L³');
+    assertFlagged(l3, 'L3');
 
     const l4 = watcher.audit('You should trust the process and surrender');
-    assertFlagged(l4, 'L⁴');
+    assertFlagged(l4, 'L4');
 
     const v0 = watcher.audit("And that's it — we are done here", 'V');
     assertFlagged(v0, 'V∅');

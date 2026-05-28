@@ -110,7 +110,7 @@ describe('Fractal Engine — membrane enforcement', () => {
       aiReflection: 'The real question here is how you should build the product.',
     });
 
-    expect(result.entry.corruptionFlags).toContain('L²');
+    expect(result.entry.corruptionFlags).toContain('L2');
     expect(result.entry.recoveryPrompts).toContain('What pattern are you recognizing? The seeing is yours.');
   });
 
@@ -122,7 +122,7 @@ describe('Fractal Engine — membrane enforcement', () => {
       aiReflection: 'I sense the resonance building in the field.',
     });
 
-    expect(result.entry.corruptionFlags).toContain('L³');
+    expect(result.entry.corruptionFlags).toContain('L3');
   });
 
   test('flags L4 when AI prescribes action as wisdom', () => {
@@ -133,7 +133,7 @@ describe('Fractal Engine — membrane enforcement', () => {
       aiReflection: 'You should trust the process and implement the obvious solution.',
     });
 
-    expect(result.entry.corruptionFlags).toContain('L⁴');
+    expect(result.entry.corruptionFlags).toContain('L4');
   });
 
   test('flags V∅ when V response lacks return question', () => {
@@ -171,7 +171,7 @@ describe('Fractal Engine — membrane enforcement', () => {
       aiReflection: 'B″ is ready. What return question opens now?',
     });
 
-    expect(result.entry.corruptionFlags).toContain('L¹');
+    expect(result.entry.corruptionFlags).toContain('L1');
   });
 
   test('rejects sub-phase override outside current phase', () => {

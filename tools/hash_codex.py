@@ -13,16 +13,15 @@ import hashlib
 from pathlib import Path
 
 CODEX_LINES = (
-    "1. H = ∞0 | A = K\n"
-    "2. S → G → Q → P → V\n"
-    "3. S = ∞0 → ?\n"
-    "4. G = α ≡ {α'}\n"
-    "5. Q = φ ∩ Ω\n"
-    "6. P = δE/δV → ∇\n"
-    "7. V = (L ∩ G → B'') → ∞0'\n"
-    "8. XY := X within Y, X,Y ∈ {S,G,Q,P,V}\n"
-    "9. No V without ∞0'\n"
-    "10. L¹  L²  L³  L⁴  V∅"
+    "1.  H = ∞0 | A = K\n"
+    "2.  S → G → Q → P → V\n"
+    "3.  S = ∞0 → ?\n"
+    "4.  G = α ≡ {α'}\n"
+    "5.  Q = φ ⋂ Ω\n"
+    "6.  P = δE/δV → ∇\n"
+    "7.  V = (L ∩ G → B'') → ∞0'\n"
+    "8.  No V without ∞0'\n"
+    "9.  L1  L2  L3  L4  V∅\n"
 )
 
 CANONICAL_HASH = hashlib.sha256(CODEX_LINES.encode()).hexdigest()

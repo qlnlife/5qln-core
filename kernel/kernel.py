@@ -27,12 +27,11 @@ CODEX_LINES = [
     "2. S → G → Q → P → V",
     "3. S = ∞0 → ?",
     "4. G = α ≡ {α'}",
-    "5. Q = φ ∩ Ω",
+    "5. Q = φ ⋂ Ω",
     "6. P = δE/δV → ∇",
     "7. V = (L ∩ G → B'') → ∞0'",
     "8. XY := X within Y, X,Y ∈ {S,G,Q,P,V}",
     "9. No V without ∞0'",
-    "10. L¹  L²  L³  L⁴  V∅",
 ]
 
 CODEX_HASH = hashlib.sha256("\n".join(CODEX_LINES).encode()).hexdigest()
@@ -44,7 +43,7 @@ OUTPUTS = {"S": "X", "G": "Y", "Q": "Z", "P": "A", "V": "B"}
 EQUATIONS = {
     "S": "∞0 → ?",
     "G": "α ≡ {α'}",
-    "Q": "φ ∩ Ω",
+    "Q": "φ ⋂ Ω",
     "P": "δE/δV → ∇",
     "V": "(L ∩ G → B'') → ∞0'",
 }
@@ -499,7 +498,7 @@ def _format(state):
             lines.append(f'     φ  = "{phi}"' if phi else "     φ  = [self-nature]")
             lines.append(f'     Ω  = "{om}"' if om else "     Ω  = [universal context]")
             if ins:
-                lines.append(f'     ⋂  = φ ∩ Ω → "{ins}"')
+                lines.append(f'     ⋂  = φ ⋂ Ω → "{ins}"')
             lines.append(f'      Z  = "{val}"' if val else "      Z  = ◌")
         elif phase == "P":
             de = d.get("deltaE", "")

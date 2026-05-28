@@ -66,7 +66,7 @@ describe('Part I — Constitutional Invariants', () => {
   test('the five equations are exactly preserved', () => {
     expect(PHASE_INFO.S.equation).toBe('∞0 → ?');
     expect(PHASE_INFO.G.equation).toBe('α ≡ {α\'}');
-    expect(PHASE_INFO.Q.equation).toBe('φ ∩ Ω');
+    expect(PHASE_INFO.Q.equation).toBe('φ ⋂ Ω');
     expect(PHASE_INFO.P.equation).toBe('δE/δV → ∇');
     expect(PHASE_INFO.V.equation).toBe('(L ∩ G → B\'\') → ∞0\'');
   });
@@ -103,7 +103,7 @@ describe('Part I — Constitutional Invariants', () => {
   });
 
   test('corruption codes are constitutional — exactly five', () => {
-    expect(CORRUPTION_CODES).toEqual(['L¹', 'L²', 'L³', 'L⁴', 'V∅']);
+    expect(CORRUPTION_CODES).toEqual(['L1', 'L2', 'L3', 'L4', 'V∅']);
     // Every code has a meaning
     for (const code of CORRUPTION_CODES) {
       expect(CORRUPTION_MEANING[code]).toBeTruthy();
@@ -153,24 +153,23 @@ describe('Part I — Constitutional Invariants', () => {
     expect(AI_BOUNDARY[4]).toContain('not complete V without ∞0\'');
   });
 
-  test('minimum valid beginning carries the 10 DNA lines', () => {
-    expect(MINIMUM_VALID_BEGINNING.length).toBe(10);
-    expect(MINIMUM_VALID_BEGINNING[0]).toBe('H = ∞0 | A = K');
-    expect(MINIMUM_VALID_BEGINNING[1]).toBe('S → G → Q → P → V');
-    expect(MINIMUM_VALID_BEGINNING[2]).toBe('S = ∞0 → ?');
-    expect(MINIMUM_VALID_BEGINNING[3]).toBe('G = α ≡ {α\'}');
-    expect(MINIMUM_VALID_BEGINNING[4]).toBe('Q = φ ∩ Ω');
-    expect(MINIMUM_VALID_BEGINNING[5]).toBe('P = δE/δV → ∇');
-    expect(MINIMUM_VALID_BEGINNING[6]).toBe('V = (L ∩ G → B\'\') → ∞0\'');
-    expect(MINIMUM_VALID_BEGINNING[7]).toContain('XY := X within Y');
-    expect(MINIMUM_VALID_BEGINNING[8]).toContain('No V without ∞0\'');
+  test('  test('minimum valid beginning carries the 9 DNA lines', () => {
+    expect(MINIMUM_VALID_BEGINNING.length).toBe(9);
+    expect(MINIMUM_VALID_BEGINNING[0]).toBe('1.  H = ∞0 | A = K');
+    expect(MINIMUM_VALID_BEGINNING[1]).toBe('2.  S → G → Q → P → V');
+    expect(MINIMUM_VALID_BEGINNING[2]).toBe('3.  S = ∞0 → ?');
+    expect(MINIMUM_VALID_BEGINNING[3]).toBe("4.  G = α ≡ {α'}");
+    expect(MINIMUM_VALID_BEGINNING[4]).toBe('5.  Q = φ ⋂ Ω');
+    expect(MINIMUM_VALID_BEGINNING[5]).toBe('6.  P = δE/δV → ∇');
+    expect(MINIMUM_VALID_BEGINNING[6]).toBe("7.  V = (L ∩ G → B'') → ∞0'");
+    expect(MINIMUM_VALID_BEGINNING[7]).toBe("8.  No V without ∞0'");
+    expect(MINIMUM_VALID_BEGINNING[8]).toBe('9.  L1  L2  L3  L4  V∅');
   });
-
   test('every corruption code has a recovery prompt', () => {
     for (const code of CORRUPTION_CODES) {
       expect(CORRUPTION_RECOVERY[code]).toBeTruthy();
     }
-    expect(CORRUPTION_RECOVERY['L¹']).toContain('∞0');
+    expect(CORRUPTION_RECOVERY['L1']).toContain('∞0');
     expect(CORRUPTION_RECOVERY['V∅']).toContain('question');
   });
 
@@ -189,11 +188,11 @@ describe('Part I — Constitutional Invariants', () => {
       }
     }
     // S watches for L¹ and L² per Skill Suite
-    expect(PHASE_CORRUPTION_WATCH.S).toContain('L¹');
-    expect(PHASE_CORRUPTION_WATCH.S).toContain('L²');
+    expect(PHASE_CORRUPTION_WATCH.S).toContain('L1');
+    expect(PHASE_CORRUPTION_WATCH.S).toContain('L2');
     // Q watches for L³ and L⁴
-    expect(PHASE_CORRUPTION_WATCH.Q).toContain('L³');
-    expect(PHASE_CORRUPTION_WATCH.Q).toContain('L⁴');
+    expect(PHASE_CORRUPTION_WATCH.Q).toContain('L3');
+    expect(PHASE_CORRUPTION_WATCH.Q).toContain('L4');
     // V watches for V∅
     expect(PHASE_CORRUPTION_WATCH.V).toContain('V∅');
   });
@@ -349,7 +348,7 @@ describe('Part II — Kernel', () => {
     // Leave S without any input
     kernel.transition('G');
     const corruption = kernel.checkCorruption();
-    expect(corruption).toContain('L¹');
+    expect(corruption).toContain('L1');
   });
 
   test('corruption detection: V∅ when B\'\' exists without return', () => {
@@ -680,8 +679,8 @@ describe('Part IV — AI Adapter', () => {
 
     // At S phase, should watch for L¹ and L²
     expect(prompt).toContain('CORRUPTION WATCH:');
-    expect(prompt).toContain('L¹');
-    expect(prompt).toContain('L²');
+    expect(prompt).toContain('L1');
+    expect(prompt).toContain('L2');
   });
 });
 
@@ -787,10 +786,10 @@ describe('Part VI — Export', () => {
     expect(card.constitutional.covenant).toBe('H = ∞0 | A = K');
     expect(card.constitutional.equations.S).toBe('∞0 → ?');
     expect(card.constitutional.equations.G).toBe('α ≡ {α\'}');
-    expect(card.constitutional.equations.Q).toBe('φ ∩ Ω');
+    expect(card.constitutional.equations.Q).toBe('φ ⋂ Ω');
     expect(card.constitutional.equations.P).toBe('δE/δV → ∇');
     expect(card.constitutional.equations.V).toBe('(L ∩ G → B\'\') → ∞0\'');
-    expect(card.constitutional.corruptionCodes).toEqual(['L¹', 'L²', 'L³', 'L⁴', 'V∅']);
+    expect(card.constitutional.corruptionCodes).toEqual(['L1', 'L2', 'L3', 'L4', 'V∅']);
     expect(card.constitutional.returnRule).toBe('No V without ∞0\'');
     expect(card.constitutional.holographicLaw).toContain('XY := X within Y');
     expect(card.constitutional.scaleLaw).toContain('Scale by repeating the lawful cell');

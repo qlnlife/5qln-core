@@ -293,10 +293,10 @@ export class Kernel {
   checkCorruption(): CorruptionCode[] {
     const active: CorruptionCode[] = [];
 
-    // L¹: Premature exit from S — moved past S with X = NONE
+    // L1: Premature exit from S — moved past S with X = NONE
     if (this._phase !== 'S' && this._outputStates.X === 'NONE') {
-      active.push('L¹');
-      this._recordCorruption('L¹');
+      active.push('L1');
+      this._recordCorruption('L1');
     }
 
     // V∅: B'' exists but no return
@@ -431,27 +431,27 @@ export class Kernel {
   }
 
   private _checkTransitionCorruption(targetPhase: Phase): void {
-    // L¹: jump-skip — moving more than one phase forward
+    // L1: jump-skip — moving more than one phase forward
     const ci = PHASES.indexOf(this._phase);
     const ti = PHASES.indexOf(targetPhase);
     if (ti > ci + 1) {
-      this._recordCorruption('L¹');
+      this._recordCorruption('L1');
     }
-    // L¹: leaving S without X
+    // L1: leaving S without X
     if (this._phase === 'S' && targetPhase !== 'S' && this._outputStates.X === 'NONE') {
-      this._recordCorruption('L¹');
+      this._recordCorruption('L1');
     }
     // G→Q without Y
     if (this._phase === 'G' && targetPhase === 'Q' && this._outputStates.Y === 'NONE') {
-      this._recordCorruption('L¹');
+      this._recordCorruption('L1');
     }
     // Q→P without Z
     if (this._phase === 'Q' && targetPhase === 'P' && this._outputStates.Z === 'NONE') {
-      this._recordCorruption('L¹');
+      this._recordCorruption('L1');
     }
     // P→V without A
     if (this._phase === 'P' && targetPhase === 'V' && this._outputStates.A === 'NONE') {
-      this._recordCorruption('L¹');
+      this._recordCorruption('L1');
     }
   }
 

@@ -30,8 +30,8 @@ This is the atomic layer. Not code. Not prompts. Pure law:
 
   H = ∞0 | A = K          ← the covenant
   S → G → Q → P → V       ← the path
-  ∞0 → ? · α ≡ {α'} · φ ∩ Ω · δE/δV → ∇ · (L ∩ G → B'') → ∞0'
-  L¹ L² L³ L⁴ V∅            ← corruption codes
+  ∞0 → ? · α ≡ {α'} · φ ⋂ Ω · δE/δV → ∇ · (L ∩ G → B'') → ∞0'
+  L1 L2 L3 L4 V∅            ← corruption codes
   SS SG SQ SP SV ... VV      ← 25 lenses
 
 USE: never changes. This is what everything else preserves.
@@ -48,7 +48,7 @@ Deterministic state machine. No AI. No UI. Pure law execution:
   • 25 sub-phase lenses with selection validation
   • Serve-vs-Be rule: lens inputs never overwrite outputs
   • Formation trail: every input recorded with source + phase
-  • Corruption detection: L¹ on premature exit, V∅ on incomplete return
+  • Corruption detection: L1 on premature exit, V∅ on incomplete return
   • Cycle lifecycle: return() resets + increments
   • Field coherence: 5 engagement modes, center-open detection
 

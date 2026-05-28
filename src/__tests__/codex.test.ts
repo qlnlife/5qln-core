@@ -25,7 +25,7 @@ describe('Codex — closure and fidelity', () => {
     const codex = new Codex();
     const entries = codex.all();
     expect(entries.length).toBe(5);
-    expect(entries.map(e => e.code)).toEqual(['L¹', 'L²', 'L³', 'L⁴', 'V∅']);
+    expect(entries.map(e => e.code)).toEqual(['L1', 'L2', 'L3', 'L4', 'V∅']);
   });
 
   test('each entry mirrors types.ts byte-for-byte', () => {
@@ -98,9 +98,9 @@ describe('Codex — phase watch alignment', () => {
     expect(codex.phasesForCode('V∅')).toContain('V');
   });
 
-  test('L¹ and L² are both watched at S', () => {
+  test('L1 and L2 are both watched at S', () => {
     const codex = new Codex();
-    expect(codex.codesForPhase('S')).toEqual(expect.arrayContaining(['L¹', 'L²']));
+    expect(codex.codesForPhase('S')).toEqual(expect.arrayContaining(['L1', 'L2']));
   });
 });
 
@@ -148,7 +148,7 @@ describe('Codex — canonical and markdown render', () => {
   test('toCanonical lists exactly the five codes in order', () => {
     const codex = new Codex();
     const canonical = codex.toCanonical();
-    expect(canonical.codes).toEqual(['L¹', 'L²', 'L³', 'L⁴', 'V∅']);
+    expect(canonical.codes).toEqual(['L1', 'L2', 'L3', 'L4', 'V∅']);
     expect(canonical.decoder_version).toBe('5QLN-Codex-v0');
     for (const code of CORRUPTION_CODES) {
       expect(canonical.entries[code].meaning).toBe(CORRUPTION_MEANING[code]);

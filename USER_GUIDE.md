@@ -52,7 +52,7 @@ S → G → Q → P → V
 |-------|----------|------------------|---------|
 | **S** (Start) | ∞0 → ? | X — Validated Spark | RECEIVE |
 | **G** (Growth) | α ≡ {α'} | Y — Validated Pattern | ILLUMINATE |
-| **Q** (Quality) | φ ∩ Ω | Z — Resonant Key | RESONATE |
+| **Q** (Quality) | φ ⋂ Ω | Z — Resonant Key | RESONATE |
 | **P** (Power) | δE/δV → ∇ | A — Flow | FLOW |
 | **V** (Value) | (L ∩ G → B'') → ∞0' | B — Benefit | CRYSTALLIZE |
 
@@ -181,7 +181,7 @@ const { newState, enrichedOrigin } = kernel.return();
 
 ```typescript
 const corruption = kernel.checkCorruption();
-// Returns CorruptionCode[] — e.g., ['L¹'] if you left S without forming X
+// Returns CorruptionCode[] — e.g., ['L1'] if you left S without forming X
 ```
 
 ### Field Coherence
@@ -663,7 +663,7 @@ import {
   FORMATION_STATES,   // ['NONE', 'EMERGING', 'FORMING', 'VALIDATED']
 
   // Corruption
-  CORRUPTION_CODES,   // ['L¹', 'L²', 'L³', 'L⁴', 'V∅']
+  CORRUPTION_CODES,   // ['L1', 'L2', 'L3', 'L4', 'V∅']
   CORRUPTION_MEANING, // Human-readable meaning per code
   CORRUPTION_FIELD_MEANING, // What fills the center per code
   CORRUPTION_RECOVERY,      // Recovery prompt per code
@@ -678,7 +678,7 @@ import {
 If you extend, fork, or build on this library, these invariants must hold:
 
 1. The five equations must be exactly preserved
-2. The corruption codes must be exactly L¹, L², L³, L⁴, V∅
+2. The corruption codes must be exactly L1, L2, L3, L4, V∅
 3. No V without ∞0'
 4. Every phase contains all five phases
 5. The center is coherence only — no sixth phase
